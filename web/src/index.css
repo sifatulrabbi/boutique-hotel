@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .px-container {
+    @apply px-6 lg:px-[12vw];
+  }
+}
+
+body {
+  @apply bg-gray-100;
+}
