@@ -10,7 +10,7 @@ const HeroSection = () => {
         alt=''
         className='rounded-3xl max-h-[80vh] w-full object-cover'
       />
-      <QuickBookingCard />
+      <QuickBookingCard className='-translate-y-1/4' />
     </div>
   );
 };

@@ -1,21 +1,6 @@
 import React from 'react';
-import QuickBookingButton from '../components/QuickBookingButton';
-
-/**
- * @name Date
- * @description Date view mini-component only used for displaying date
- *
- * @param {{date: number; month: string}} param0
- * @returns {JSX.Element}
- */
-const Date = ({date, month}) => (
-  <span className='font-bold text-sm flex flex-row justify-start items-end gap-1'>
-    <span className='font-extrabold text-2xl'>
-      {date < 10 ? `0${date}` : date}
-    </span>
-    {month}
-  </span>
-);
+import QuickBookingButton from './QuickBookingButton';
+import DateView from './DateView';
 
 /**
  * @name QuickBookingCard
@@ -28,7 +13,9 @@ const Date = ({date, month}) => (
  */
 const QuickBookingCard = ({className}) => {
   return (
-    <div className={`bg-white flex flex-col rounded-3xl ${className}`}>
+    <div
+      className={`bg-white flex flex-col rounded-3xl w-full max-w-[90%] mx-auto lg:flex-row lg:justify-between lg:items-center p-4 ${className}`}
+    >
       <QuickBookingButton
         primaryLabel={'Check-in'}
         secondaryLabel={'Click to select a date'}
@@ -39,18 +26,18 @@ const QuickBookingCard = ({className}) => {
       />
 
       {/* from and to view section */}
-      <div className='flex flex-row gap-4 justify-start items-end p-4 w-max'>
+      <div className='flex flex-row gap-4 justify-start items-end h-max px-4 py-4 lg:py-0 w-max mb-6 lg:mb-0'>
         {/* check in date TODO: this will be programmatic and dynamic */}
-        <Date date={12} month={'May'} />
+        <DateView date={12} month={'May'} />
         <span className='text-sm text-textSecondary'>to</span>
         {/* check out date TODO: this will be programmatic and dynamic */}
-        <Date date={6} month={'June'} />
+        <DateView date={6} month={'June'} />
       </div>
 
       {/* Booking button to proceed to the room booking page */}
-      <div className='p-4 w-full'>
-        <button className='btn-primary w-full'>Check available rooms</button>
-      </div>
+      <button className='btn-primary w-full lg:w-max py-4'>
+        Check available rooms
+      </button>
     </div>
   );
 };
