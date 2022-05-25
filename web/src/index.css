@@ -11,3 +11,13 @@
 body {
   @apply bg-gray-100;
 }
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 text-base text-white font-bold flex justify-center items-center bg-primary-400 rounded-xl hover:bg-primary-700;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 text-base text-primary-400 font-bold flex justify-center items-center bg-primary-100 rounded-xl hover:text-primary-700;
+  }
+}

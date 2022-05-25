@@ -1,10 +1,11 @@
 import React from 'react';
 import PageMain from '../../components/PageMain';
+import HeroSection from '../../modules/HeroSection';
 
 const HomePage = () => {
   return (
     <PageMain>
-      <h1>Hello world</h1>
+      <HeroSection />
     </PageMain>
   );
 };
