@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Logo from '../components/Logo';
 import {NavLink} from 'react-router-dom';
+import {v4} from 'uuid';
 
 const navLinks = [
   {name: 'Home', path: '/', type: 'link'},
@@ -21,7 +22,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className='fixed top-0 right-0 left-0 h-[70px] bg-white px-container flex flex-row justify-between items-center'>
+    <header className='z-[1000] fixed top-0 right-0 left-0 h-[70px] bg-white px-container flex flex-row justify-between items-center border-b-[1px] border-gray-100'>
       {/* Logo */}
       <Logo />
       {/* nav menu button */}
@@ -59,6 +60,7 @@ const Navbar = () => {
         <div className='flex flex-col justify-start items-start w-full px-6 gap-4 mt-12 lg:flex-row lg:mt-0 lg:gap-8 lg:items-center'>
           {navLinks.map((link) => (
             <NavLink
+              key={v4()}
               to={link.path}
               className={({isActive}) =>
                 link.type === 'button'

@@ -1,14 +1,14 @@
 import React from 'react';
-import {heroImg} from '../images';
-import QuickBookingCard from './QuickBookingCard';
+// import {heroImg} from '../../images';
+import QuickBookingCard from '../../modules/QuickBookingCard';
 
 const HeroSection = () => {
   return (
     <div className='flex flex-col'>
       <img
-        src={heroImg}
+        src='https://unsplash.com/photos/b_79nOqf95I/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MjB8fGd1ZXN0JTIwaG91c2V8ZW58MHx8fHwxNjUzNDg0NjEw&force=true'
         alt=''
-        className='rounded-3xl max-h-[80vh] w-full object-cover'
+        className='rounded-3xl h-[80vh] w-full object-cover'
       />
       <QuickBookingCard className='-translate-y-1/4' />
 
