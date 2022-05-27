@@ -16,7 +16,7 @@ const RoomCard = ({index, title, desc, rate, type, img}) => {
 
   return (
     <div
-      className={`flex-col bg-white rounded-3xl gap-2 transition-all duration-300 lg:flex-row 
+      className={`flex-col bg-white rounded-3xl gap-2 transition-all duration-300 md:flex-row 
       ${index === roomIndex ? 'opacity-100 flex' : 'opacity-0 hidden'}`}
     >
       {/* image part */}

@@ -2,6 +2,7 @@ import React from 'react';
 import PageMain from '../../components/PageMain';
 import HeroSection from './HeroSection';
 import RoomsSection from './RoomsSection';
+import FeaturesSection from './FeaturesSection';
 
 const HomePage = () => {
   return (
@@ -9,6 +10,8 @@ const HomePage = () => {
       <HeroSection />
       <div className='my-[10vh]' />
       <RoomsSection />
+      <div className='my-[10vh]' />
+      <FeaturesSection />
     </PageMain>
   );
 };
