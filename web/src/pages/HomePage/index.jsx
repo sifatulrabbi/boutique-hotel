@@ -7,7 +7,7 @@ import ReviewsSection from './ReviewsSection';
 
 const HomePage = () => {
   return (
-    <PageMain>
+    <PageMain className='mt-0'>
       <HeroSection />
       <div className='my-[10vh]' />
       <RoomsSection />
