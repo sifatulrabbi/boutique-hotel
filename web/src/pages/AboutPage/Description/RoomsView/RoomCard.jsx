@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 const RoomCard = ({title, type, rate, id, img}) => {
   return (
-    <div className='flex flex-row rounded-3xl bg-white p-4 gap-4 h-full w-full max-w-[350px]'>
+    <div className='flex flex-row rounded-3xl bg-white p-4 gap-4 w-full max-w-[350px]'>
       <img
         src={img}
         alt=''
