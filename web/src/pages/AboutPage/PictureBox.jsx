@@ -2,6 +2,7 @@ import React from 'react';
 import {aboutPictureState, aboutPicturesCollection} from '../../atoms';
 import {useRecoilState, useRecoilValue} from 'recoil';
 import {FaChevronRight, FaChevronLeft} from 'react-icons/fa';
+import {v4} from 'uuid';
 
 const PictureBox = () => {
   const images = useRecoilValue(aboutPicturesCollection);
@@ -30,22 +31,27 @@ const PictureBox = () => {
   }
 
   return (
-    <div className='flex'>
+    <div className='picture-box-container'>
       {images.map((img, index) => (
         <div
-          className={`rounded-3xl relative ${
+          key={v4()}
+          className={`relative w-full ${
             activeIndex === index ? 'block' : 'hidden'
-          }`}
+          } lg:block img${index + 1}`}
         >
-          <img src={img} alt='' className='object-cover rounded-3xl' />
+          <img
+            src={img}
+            alt=''
+            className='object-cover rounded-3xl lg:rounded-none max-h-[300px] w-full'
+          />
           <button
-            className='bg-white rounded-full p-2 lg:p-4 absolute top-1/2 shadow-md -translate-y-1/2 left-0 -translate-x-1/2'
+            className='bg-white rounded-full p-2 lg:p-4 absolute top-1/2 shadow-md -translate-y-1/2 left-0 -translate-x-1/2 lg:hidden'
             onClick={scrollLeft}
           >
             <FaChevronLeft className='text-lg text-textPrimary' />
           </button>
           <button
-            className='bg-white rounded-full p-2 lg:p-4 absolute top-1/2 shadow-md -translate-y-1/2 right-0 translate-x-1/2'
+            className='bg-white rounded-full p-2 lg:p-4 absolute top-1/2 shadow-md -translate-y-1/2 right-0 translate-x-1/2 lg:hidden'
             onClick={scrollRight}
           >
             <FaChevronRight className='text-lg text-textPrimary' />

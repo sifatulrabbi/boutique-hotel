@@ -22,3 +22,41 @@ body {
     @apply px-6 py-3 text-base text-primary-400 font-bold flex justify-center items-center bg-primary-100 rounded-xl hover:text-primary-700 transition-colors duration-300;
   }
 }
+
+/**
+ * Picture box custom styles
+ */
+
+.picture-box-container {
+  @apply flex lg:grid lg:gap-2;
+
+  grid-template-areas:
+    'img1 img1 img2 img3'
+    'img1 img1 img4 img5';
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.img1 {
+  grid-area: img1;
+  @apply lg:h-full;
+}
+
+.img1 img {
+  @apply lg:max-h-[600px];
+}
+
+.img2 {
+  grid-area: img2;
+}
+
+.img3 {
+  grid-area: img3;
+}
+
+.img4 {
+  grid-area: img4;
+}
+
+.img5 {
+  grid-area: img5;
+}
