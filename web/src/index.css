@@ -42,7 +42,7 @@ body {
 }
 
 .img1 img {
-  @apply lg:max-h-[600px];
+  @apply lg:max-h-[608px];
 }
 
 .img2 {
