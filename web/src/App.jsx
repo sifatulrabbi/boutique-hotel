@@ -7,6 +7,7 @@ import AboutPage from './pages/AboutPage';
 import RoomsPage from './pages/RoomsPage';
 import RoomPage from './pages/RoomPage';
 import ContactPage from './pages/ContactPage';
+import LocationsPage from './pages/LocationsPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           }
         />
         <Route path='/contact' element={<ContactPage />} />
+        <Route path='/locations' element={<LocationsPage />} />
       </Routes>
       <Footer />
     </Suspense>
