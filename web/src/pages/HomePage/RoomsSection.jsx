@@ -1,7 +1,7 @@
 import React from 'react';
 import {roomsSelector} from '../../atoms';
 import {useRecoilValue} from 'recoil';
-import RoomCard from '../../components/RoomCard';
+import RoomCard from '../../modules/RoomCard';
 import {v4} from 'uuid';
 import {FaChevronRight, FaChevronLeft} from 'react-icons/fa';
 import {useHomePageRoomView} from '../../hooks';

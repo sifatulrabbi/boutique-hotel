@@ -1,6 +1,6 @@
 import React from 'react';
 import {v4} from 'uuid';
-import Chip from './Chip';
+import Chip from '../components/Chip';
 import {useRecoilValue} from 'recoil';
 import {roomsViewIndex} from '../atoms';
 import {Link} from 'react-router-dom';
@@ -22,18 +22,18 @@ const RoomCard = ({
     <div
       className={`flex-col bg-white rounded-3xl gap-2 transition-all duration-300 md:flex-row 
       ${
-        index === notHidden
-          ? index
-          : roomIndex
-          ? 'opacity-100 flex'
-          : 'opacity-0 hidden'
+        !notHidden
+          ? index === roomIndex
+            ? 'opacity-100 flex'
+            : 'opacity-0 hidden'
+          : 'opacity-100 flex'
       }`}
     >
       {/* image part */}
       <img
         src={img}
         alt=''
-        className='rounded-3xl object-cover h-[280px] md:w-[50vw]'
+        className='rounded-3xl object-cover h-[250px] md:h-[315px] md:w-[50vw]'
       />
       {/* content part */}
       <div className='flex flex-col justify-start lg:justify-between items-start gap-4 p-5'>
