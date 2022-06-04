@@ -5,6 +5,8 @@ import Footer from './modules/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import RoomsPage from './pages/RoomsPage';
+import RoomPage from './pages/RoomPage';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
@@ -18,10 +20,11 @@ function App() {
           element={
             <Routes>
               <Route path='/' element={<RoomsPage />} />
-              <Route path='/:id' element={<div>Not configured yet</div>} />
+              <Route path='/:id' element={<RoomPage />} />
             </Routes>
           }
         />
+        <Route path='/contact' element={<ContactPage />} />
       </Routes>
       <Footer />
     </Suspense>

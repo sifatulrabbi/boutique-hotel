@@ -1,7 +1,7 @@
 import React from 'react';
-import PageMain from '../../components/PageMain';
-import RoomCard from '../../modules/RoomCard';
-import {roomsSelector} from '../../atoms';
+import PageMain from '../components/PageMain';
+import RoomCard from '../modules/RoomCard';
+import {roomsSelector} from '../atoms';
 import {useRecoilValue} from 'recoil';
 import {v4} from 'uuid';
 
