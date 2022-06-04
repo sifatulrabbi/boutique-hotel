@@ -1,10 +1,6 @@
 import {useRecoilState, useRecoilValue} from 'recoil';
 import {roomsSelector, roomsViewIndex} from '../atoms';
 
-/**
- *
- * @returns {{nextRoom: () => void; prevRoom: () => void;}}
- */
 export function useHomePageRoomView() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomsViewIndex);
   const rooms = useRecoilValue(roomsSelector);

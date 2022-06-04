@@ -14,7 +14,7 @@ const links = [
   },
   {
     title: 'Find rooms',
-    path: '/find-rooms',
+    path: '/rooms',
   },
   {
     title: 'Locations',
