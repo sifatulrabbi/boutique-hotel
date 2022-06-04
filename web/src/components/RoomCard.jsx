@@ -1,23 +1,33 @@
 import React from 'react';
 import {v4} from 'uuid';
-import Chip from '../../../components/Chip';
+import Chip from './Chip';
 import {useRecoilValue} from 'recoil';
-import {roomsViewIndex} from '../../../atoms';
+import {roomsViewIndex} from '../atoms';
+import {Link} from 'react-router-dom';
 
-/**
- * @name RoomCard
- * @description Rooms view card for the home page
- *
- * @param {{index: number; title: string; desc: string[]; rate: number; img: string}} param0
- * @returns
- */
-const RoomCard = ({index, title, desc, rate, type, img}) => {
+const RoomCard = ({
+  index,
+  title,
+  desc,
+  rate,
+  type,
+  img,
+  id,
+  notHidden,
+  showButton,
+}) => {
   const roomIndex = useRecoilValue(roomsViewIndex);
 
   return (
     <div
       className={`flex-col bg-white rounded-3xl gap-2 transition-all duration-300 md:flex-row 
-      ${index === roomIndex ? 'opacity-100 flex' : 'opacity-0 hidden'}`}
+      ${
+        index === notHidden
+          ? index
+          : roomIndex
+          ? 'opacity-100 flex'
+          : 'opacity-0 hidden'
+      }`}
     >
       {/* image part */}
       <img
@@ -40,6 +50,16 @@ const RoomCard = ({index, title, desc, rate, type, img}) => {
           <Chip label={type} />
           <Chip label={`$${rate}/night`} />
         </div>
+
+        {/* Optional button for rooms page only */}
+        {showButton && (
+          <Link
+            to={`/rooms/${id}`}
+            className='btn-secondary w-full md:w-max mt-6'
+          >
+            Check availability
+          </Link>
+        )}
       </div>
     </div>
   );
