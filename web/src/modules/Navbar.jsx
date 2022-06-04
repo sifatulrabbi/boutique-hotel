@@ -66,7 +66,7 @@ const Navbar = () => {
               className={({isActive}) =>
                 link.type === 'button'
                   ? 'px-6 py-3 text-white bg-primary-400 font-bold rounded-3xl w-full text-center hover:bg-primary-700 transition-colors duration-300'
-                  : `w-full py-2 font-bold text-gray-500 hover:text-primary-400 transition-colors duration-300  
+                  : `w-full py-2 font-bold hover:text-primary-400 transition-colors duration-300  
               ${isActive ? 'text-textPrimary' : 'text-textLight'}`
               }
             >

@@ -31,12 +31,12 @@ const reviews = [
 
 const ReviewsSection = () => {
   return (
-    <div className='flex flex-col overflow-hidden max-w-[100%]'>
+    <div className='flex flex-col max-w-[100%]'>
       <h3 className='text-xl text-center max-w-[60vw] mx-auto font-bold text-textPrimary mb-8'>
         Some of our satisfied visitors
       </h3>
       {/* cards */}
-      <div className='flex flex-row overflow-y-hidden overflow-x-auto gap-6 p-2'>
+      <div className='flex flex-row overflow-x-auto gap-6 p-2'>
         {reviews.map((item) => (
           <ReviewCard key={v4()} {...item} />
         ))}
