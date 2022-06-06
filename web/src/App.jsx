@@ -5,7 +5,6 @@ import Footer from './modules/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import RoomsPage from './pages/RoomsPage';
-import RoomPage from './pages/RoomPage';
 import ContactPage from './pages/ContactPage';
 import LocationsPage from './pages/LocationsPage';
 
@@ -16,15 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/about' element={<AboutPage />} />
-        <Route
-          path='/rooms/*'
-          element={
-            <Routes>
-              <Route path='/' element={<RoomsPage />} />
-              <Route path='/:id' element={<RoomPage />} />
-            </Routes>
-          }
-        />
+        <Route path='/rooms' element={<RoomsPage />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/locations' element={<LocationsPage />} />
       </Routes>
