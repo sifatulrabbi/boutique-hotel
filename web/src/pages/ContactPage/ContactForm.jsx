@@ -8,6 +8,10 @@ const ContactForm = () => {
     {name: 'message', label: 'Your Message', type: 'textbox', required: true},
   ];
 
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
+
   const className =
     'p-3 rounded-2xl text-textPrimary placeholder:text-textLight w-full bg-gray-100 focus:outline-primary-400';
 
@@ -15,6 +19,7 @@ const ContactForm = () => {
     <form
       action='submit'
       className='flex flex-col bg-white p-4 rounded-3xl gap-4 w-full h-max'
+      onSubmit={handleSubmit}
     >
       {formFields.map((field) => {
         return field.type !== 'textbox' ? (

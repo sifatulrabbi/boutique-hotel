@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import Logo from '../components/Logo';
 import {NavLink} from 'react-router-dom';
 import {v4} from 'uuid';
+import {showLoginModalState} from '../atoms';
+import {useSetRecoilState} from 'recoil';
 
 const navLinks = [
   {name: 'Home', path: '/', type: 'link'},
@@ -9,15 +11,12 @@ const navLinks = [
   {name: 'Rooms', path: '/rooms', type: 'link'},
   {name: 'Contact', path: '/contact', type: 'link'},
   {name: 'Locations', path: '/locations', type: 'link'},
-  {name: 'Login', path: '/login', type: 'button'},
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const setLoginModal = useSetRecoilState(showLoginModalState);
 
-  /**
-   * Menu open state toggler
-   */
   function menuToggler() {
     setOpen((prev) => !prev);
   }
@@ -73,6 +72,12 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
+          <button
+            className='px-6 py-3 text-white bg-primary-400 font-bold rounded-3xl w-full text-center hover:bg-primary-700 transition-colors duration-300'
+            onClick={() => setLoginModal(true)}
+          >
+            Login
+          </button>
         </div>
       </div>
     </header>

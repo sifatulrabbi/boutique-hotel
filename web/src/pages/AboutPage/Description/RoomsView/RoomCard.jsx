@@ -18,7 +18,7 @@ const RoomCard = ({title, type, rate, id, img}) => {
           Starting from <span className='font-bold'>${rate}/night</span>
         </span>
         <Link
-          to={`/rooms/${id}`}
+          to={`/rooms`}
           className='mt-2 text-primary-400 text-left text-sm font-bold'
         >
           View Room

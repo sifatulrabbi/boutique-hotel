@@ -1,10 +1,11 @@
 import React from 'react';
 import CalendarView from './CalendarView';
-import {useRecoilValue} from 'recoil';
-import {totalSelectedDatesState} from '../atoms';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {totalSelectedDatesState, showLoginModalState} from '../atoms';
 
 const RoomCardBookingSection = ({show, rate}) => {
   const totalDays = useRecoilValue(totalSelectedDatesState);
+  const setShowLoginModal = useSetRecoilState(showLoginModalState);
 
   return (
     <div className={`w-full px-5 ${show ? 'block' : 'hidden'}`}>
@@ -42,6 +43,7 @@ const RoomCardBookingSection = ({show, rate}) => {
           <button
             className='btn-primary w-full mt-auto disabled:bg-gray-500'
             disabled={totalDays.length < 1}
+            onClick={() => setShowLoginModal((prev) => !prev)}
           >
             Checkout
           </button>
