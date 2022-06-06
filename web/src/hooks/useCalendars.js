@@ -4,11 +4,16 @@ import {startDateState, endDateState, totalSelectedDatesState} from '../atoms';
 import {BookingCalendar} from '../utils';
 
 export function useCalendar() {
+  const calendar = new BookingCalendar(new Date());
+
   const [startDate, setStartDate] = useRecoilState(startDateState);
   const [endDate, setEndDate] = useRecoilState(endDateState);
   const [isStart, setIsStart] = React.useState(true);
   const [selectedDates, setSelectedDates] = useRecoilState(
     totalSelectedDatesState,
+  );
+  const [monthlyCalendars, setMonthlyCalendars] = React.useState(
+    calendar.monthlyCalendar,
   );
 
   function handleSelected(date) {
@@ -51,8 +56,6 @@ export function useCalendar() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
-  const calendar = new BookingCalendar(new Date());
-
   return {
     days: calendar.days,
     daysAndDates: calendar.daysAndDates,
@@ -61,6 +64,7 @@ export function useCalendar() {
     endDate,
     month: calendar.month.name,
     year: calendar.year,
+    monthlyCalendars,
     handleSelected,
     resetDates,
   };

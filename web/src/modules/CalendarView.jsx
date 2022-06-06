@@ -1,10 +1,16 @@
 import React from 'react';
 import {useCalendar} from '../hooks';
 import {v4} from 'uuid';
+import {FaChevronRight, FaChevronLeft} from 'react-icons/fa';
+import {useRecoilValue} from 'recoil';
+import {monthlyCalendarsState} from '../atoms';
 
 const CalendarView = () => {
+  const [activeCal, setActiveCal] = React.useState();
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const monthlyCalendars = useRecoilValue(monthlyCalendarsState);
+
   const {
-    daysAndDates,
     days,
     startDate,
     endDate,
@@ -15,12 +21,58 @@ const CalendarView = () => {
     resetDates,
   } = useCalendar();
 
+  function changeCalForward() {
+    setActiveCal(() => {
+      if (activeIndex + 1 > monthlyCalendars.length - 1) {
+        setActiveIndex(activeIndex);
+        return monthlyCalendars[activeIndex];
+      } else {
+        setActiveIndex(activeIndex + 1);
+        return monthlyCalendars[activeIndex + 1];
+      }
+    });
+  }
+
+  function changeCalPrevious() {
+    setActiveCal(() => {
+      if (activeIndex - 1 < 0) {
+        setActiveIndex(activeIndex);
+        return monthlyCalendars[activeIndex];
+      } else {
+        setActiveIndex(activeIndex - 1);
+        return monthlyCalendars[activeIndex - 1];
+      }
+    });
+  }
+
+  React.useEffect(() => {
+    setActiveCal(monthlyCalendars[0]);
+  }, []);
+
+  if (!activeCal) {
+    return <div></div>;
+  }
+
   return (
     <div className='w-full flex flex-col overflow-hidden gap-2 rounded-xl border-[1px] border-gray-400'>
-      <div className='bg-gray-100 p-4'>
+      <div className='bg-gray-100 p-4 flex flex-row justify-between items-center'>
+        <button
+          className='disabled:opacity-30'
+          onClick={changeCalPrevious}
+          disabled={startDate !== 0 || endDate !== 0}
+        >
+          <FaChevronLeft />
+        </button>
         <span className='text-textPrimary text-base text-center w-full block'>
-          {month}, {year}
+          {activeCal.month}, {year}
         </span>
+        <button
+          className='disabled:opacity-50'
+          onClick={changeCalForward}
+          disabled={startDate !== 0 || endDate !== 0}
+        >
+          <FaChevronRight />
+        </button>
       </div>
 
       {/* Day names */}
@@ -42,7 +94,7 @@ const CalendarView = () => {
             key={v4()}
             className='text-xs lg:text-sm font-bold flex flex-col justify-start items-center gap-4 w-full'
           >
-            {daysAndDates[day].map((date) => (
+            {activeCal.dates[day].map((date) => (
               <button
                 key={v4()}
                 className={`font-normal text-xs lg:text-sm h-8 w-8 rounded-full 

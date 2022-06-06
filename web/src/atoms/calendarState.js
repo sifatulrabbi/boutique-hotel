@@ -1,4 +1,5 @@
-import {atom} from 'recoil';
+import {atom, selector} from 'recoil';
+import {BookingCalendar} from '../utils';
 
 export const startDateState = atom({
   key: 'startDateState',
@@ -13,4 +14,13 @@ export const endDateState = atom({
 export const totalSelectedDatesState = atom({
   key: 'totalSelectedDatesState',
   default: [],
+});
+
+export const monthlyCalendarsState = selector({
+  key: 'monthlyCalendarsState',
+  get: () => {
+    const calendar = new BookingCalendar();
+
+    return calendar.monthlyCalendar;
+  },
 });

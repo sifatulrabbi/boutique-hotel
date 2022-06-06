@@ -16,37 +16,55 @@ export class BookingCalendar {
 
   days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  daysAndDates = {
-    Sun: [],
-    Mon: [],
-    Tue: [],
-    Wed: [],
-    Thu: [],
-    Fri: [],
-    Sat: [],
-  };
-
   monthlyCalendar = [];
 
-  constructor(today) {
+  constructor() {
+    const today = new Date();
     this.year = today.getFullYear();
     this.month = this.months[today.getMonth()];
+    const secondMonth = new Date(2022, today.getMonth() + 1, 1);
+    const thirdMonth = new Date(2022, secondMonth.getMonth() + 1, 1);
 
-    this.fillBeforeFirstDate(today);
+    this.daysAndDates = this.createMonthlyCalendar(today);
+    const firstCal = this.createMonthlyCalendar(today);
+    const secondCal = this.createMonthlyCalendar(secondMonth);
+    const thirdCal = this.createMonthlyCalendar(thirdMonth);
+
+    this.monthlyCalendar = [
+      {month: this.months[today.getMonth()].name, dates: firstCal},
+      {month: this.months[secondMonth.getMonth()].name, dates: secondCal},
+      {month: this.months[thirdMonth.getMonth()].name, dates: thirdCal},
+    ];
+  }
+
+  createMonthlyCalendar(today) {
+    const daysAndDates = {
+      Sun: [],
+      Mon: [],
+      Tue: [],
+      Wed: [],
+      Thu: [],
+      Fri: [],
+      Sat: [],
+    };
+
+    this.fillBeforeFirstDate(today, daysAndDates);
 
     for (let i = 1; i < this.month.days + 1; i++) {
       const d = new Date(this.year, today.getMonth(), i);
       const dayName = this.days[d.getDay()];
 
-      if (this.daysAndDates[dayName]) {
-        this.daysAndDates[dayName].push(d.getDate());
+      if (daysAndDates[dayName]) {
+        daysAndDates[dayName].push(d.getDate());
       }
     }
 
-    this.fillAfterLastDate(today);
+    this.fillAfterLastDate(today, daysAndDates);
+
+    return daysAndDates;
   }
 
-  fillBeforeFirstDate(today) {
+  fillBeforeFirstDate(today, daysAndDates) {
     // Find the first date of the month
     const firstDate = new Date(this.year, today.getMonth(), 1);
 
@@ -54,13 +72,13 @@ export class BookingCalendar {
     while (this.days[firstDay]) {
       const day = this.days[firstDay];
       // Push 0 for empty spaces
-      this.daysAndDates[day].push(0);
+      daysAndDates[day].push(0);
 
       firstDay--;
     }
   }
 
-  fillAfterLastDate(today) {
+  fillAfterLastDate(today, daysAndDates) {
     // Find the last date of the month
     const lastDate = new Date(this.year, today.getMonth(), this.month.days);
 
@@ -68,7 +86,7 @@ export class BookingCalendar {
     while (this.days[lastDay]) {
       const day = this.days[lastDay];
       // Push 0 for empty spaces
-      this.daysAndDates[day].push(0);
+      daysAndDates[day].push(0);
 
       lastDay++;
     }
