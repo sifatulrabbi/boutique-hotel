@@ -1,4 +1,4 @@
-const {DataTypes, INTEGER} = require("sequelize/types");
+const {DataTypes} = require("sequelize/types");
 const {db} = require("../core");
 
 /**
@@ -9,6 +9,7 @@ const {db} = require("../core");
  * @Description Room's description
  * @Type type of the room 'single' / 'double'
  * @Cost Room cost/night
+ * @Bookings An array containing all the bookings (Foreign value)
  */
 const Room = db.define("room", {
   id: {
@@ -34,4 +35,4 @@ const Room = db.define("room", {
   },
 });
 
-module.exports.Room = Room;
+module.exports = Room;
