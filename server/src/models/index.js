@@ -7,10 +7,10 @@ async function syncModels() {
 
     // General sync method
     await db.sync();
-
     console.debug("Synchronized all the tables");
   } catch (err) {
     console.error("Error occurred while synchronizing the tables: ", err);
+    process.exit(1);
   }
 }
 
