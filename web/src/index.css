@@ -31,8 +31,8 @@ body {
   @apply flex lg:grid lg:gap-2;
 
   grid-template-areas:
-    'img1 img1 img2 img3'
-    'img1 img1 img4 img5';
+    "img1 img1 img2 img3"
+    "img1 img1 img4 img5";
   grid-template-columns: repeat(4, 1fr);
 }
 

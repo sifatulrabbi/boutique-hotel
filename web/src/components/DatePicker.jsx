@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const DatePicker = ({state}) => {
   function setSelectedDate(e) {
     state[1](e.target.value);
   }
 
-  return <div className='grid grid-cols-7'>{}</div>;
+  return <div className="grid grid-cols-7">{}</div>;
 };
 
 export default DatePicker;

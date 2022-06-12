@@ -1,5 +1,5 @@
-import {useRecoilState, useRecoilValue} from 'recoil';
-import {roomsSelector, roomsViewIndex} from '../atoms';
+import {useRecoilState, useRecoilValue} from "recoil";
+import {roomsSelector, roomsViewIndex} from "../atoms";
 
 export function useHomePageRoomView() {
   const [roomIndex, setRoomIndex] = useRecoilState(roomsViewIndex);

@@ -1,5 +1,5 @@
-import React from 'react';
-import {scrollToTop} from '../utils';
+import React from "react";
+import {scrollToTop} from "../utils";
 
 const PageMain = ({children, className}) => {
   React.useEffect(() => {

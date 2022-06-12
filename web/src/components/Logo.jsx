@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Logo component
@@ -6,15 +6,15 @@ import React from 'react';
  */
 const Logo = () => {
   function onClick() {
-    window.location.href = '/';
+    window.location.href = "/";
   }
 
   return (
     <button
-      className='flex justify-center items-center text-black text-2xl font-extrabold gap-[2px]'
+      className="flex justify-center items-center text-black text-2xl font-extrabold gap-[2px]"
       onClick={onClick}
     >
-      <span className='italic'>B</span>
+      <span className="italic">B</span>
       <span>H</span>
     </button>
   );

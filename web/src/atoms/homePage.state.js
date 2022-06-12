@@ -1,6 +1,6 @@
-import {atom} from 'recoil';
+import {atom} from "recoil";
 
 export const roomsViewIndex = atom({
-  key: 'roomsViewIndex',
+  key: "roomsViewIndex",
   default: 0,
 });

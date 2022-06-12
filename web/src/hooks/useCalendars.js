@@ -1,7 +1,7 @@
-import React from 'react';
-import {useRecoilState} from 'recoil';
-import {startDateState, endDateState, totalSelectedDatesState} from '../atoms';
-import {BookingCalendar} from '../utils';
+import React from "react";
+import {useRecoilState} from "recoil";
+import {startDateState, endDateState, totalSelectedDatesState} from "../atoms";
+import {BookingCalendar} from "../utils";
 
 export function useCalendar() {
   const calendar = new BookingCalendar(new Date());
