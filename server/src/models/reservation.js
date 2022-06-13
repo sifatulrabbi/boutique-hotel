@@ -9,22 +9,30 @@ const {db} = require("../core");
  * @EndDate Booking end date
  * @RoomId Booked room id (Foreign key)
  */
-const Booking = db.define({
+const Reservation = db.define({
   id: {
     type: DataTypes.INTEGER,
     autoComplete: true,
     primaryKey: true,
   },
-  startDate: {
+  checkIn: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  endDate: {
+  checkOut: {
     type: DataTypes.DATE,
+    allowNull: false,
+  },
+  clientEmail: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  clientName: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });
 
 /** Relations */
 
-module.exports = Booking;
+module.exports = Reservation;

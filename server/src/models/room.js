@@ -26,7 +26,7 @@ const Room = db.define("room", {
     allowNull: false,
   },
   type: {
-    type: DataTypes.STRING(50),
+    type: DataTypes.STRING(20),
     allowNull: false,
   },
   cost: {
