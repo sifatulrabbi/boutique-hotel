@@ -3,10 +3,10 @@ const {Router} = require("express");
 const router = Router();
 
 /**
- * Get all the bookings
+ * Get all the reservations
  *
  * @method GET
- * @path /bookings/all
+ * @path /reservations/all
  */
 router.get("/all", async (req, res) => {
   try {
@@ -17,10 +17,10 @@ router.get("/all", async (req, res) => {
 });
 
 /**
- * Get booking of a room
+ * Get reservation of a room
  *
  * @method GET
- * @path /bookings/room/:roomId
+ * @path /reservations/room/:roomId
  */
 router.get("/room/:roomId", async (req, res) => {
   try {
@@ -31,12 +31,12 @@ router.get("/room/:roomId", async (req, res) => {
 });
 
 /**
- * Get a single booking
+ * Get a single reservation
  *
  * @method GET
- * @path /bookings/single/:bookingId
+ * @path /reservations/single/:id
  */
-router.get("/room/:roomId", async (req, res) => {
+router.get("/single/:id", async (req, res) => {
   try {
     res.status(200).json({success: true});
   } catch (err) {
@@ -45,12 +45,12 @@ router.get("/room/:roomId", async (req, res) => {
 });
 
 /**
- * Create a booking
+ * Create a reservation
  *
  * @method POST
- * @path /bookings
+ * @path /reservations
  */
-router.post("/bookings", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     res.status(200).json({success: true});
   } catch (err) {
