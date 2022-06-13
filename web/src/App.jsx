@@ -8,6 +8,7 @@ import RoomsPage from "./pages/RoomsPage";
 import ContactPage from "./pages/ContactPage";
 import LocationsPage from "./pages/LocationsPage";
 import LoginModal from "./modules/LoginModal";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/rooms" element={<RoomsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/locations" element={<LocationsPage />} />
+        <Route path="/admin/*" element={<AdminPanel />} />
       </Routes>
       <Footer />
     </Suspense>
