@@ -1,4 +1,4 @@
-import {Reservation} from "../models";
+const {Reservation} = require("../models");
 
 /**
  * Add a reservation
