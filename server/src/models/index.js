@@ -17,6 +17,6 @@ async function syncModels() {
 module.exports = {
   syncModels,
   Rooms: require("./room"),
-  Booking: require("./reservation"),
+  Reservation: require("./reservation"),
   Request: require("./request"),
 };
