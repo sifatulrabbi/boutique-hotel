@@ -5,7 +5,7 @@ export const roomsSelector = selector({
   get: () => {
     return [
       {
-        id: "room-1",
+        id: 1,
         title: "Room One",
         img: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-1.2.1&dl=ralph-ravi-kayden-FqqiAvJejto-unsplash.jpg&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
         desc: [
@@ -16,14 +16,14 @@ export const roomsSelector = selector({
         rate: 350,
       },
       {
-        id: "room-2",
+        id: 2,
         title: "Room Two",
         img: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-1.2.1&dl=ralph-ravi-kayden-FqqiAvJejto-unsplash.jpg&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
         desc: [
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisis congue justo, elementum ut quisque velit aenean viverra.",
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisis congue justo, elementum ut quisque velit aenean viverra.",
         ],
-        type: "Single bed",
+        type: 3,
         rate: 250,
       },
       {
@@ -38,7 +38,7 @@ export const roomsSelector = selector({
         rate: 300,
       },
       {
-        id: "room-4",
+        id: 4,
         title: "Room Four",
         img: "https://unsplash.com/photos/iAftdIcgpFc/download?force=true",
         desc: [

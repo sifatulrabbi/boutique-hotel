@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .px-container {
+    @apply px-6 lg:px-[12vw];
+  }
+}
+
+body {
+  @apply bg-gray-100 text-textSecondary;
+  overflow-x: hidden !important;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 text-base text-white font-bold flex justify-center items-center bg-primary-400 rounded-xl hover:bg-primary-700 transition-colors duration-300;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 text-base text-primary-400 font-bold flex justify-center items-center bg-primary-400/10 rounded-xl hover:text-primary-700 transition-colors duration-300 hover:bg-primary-400/5;
+  }
+}
+
+/**
+ * Picture box custom styles
+ */
+
+.picture-box-container {
+  @apply flex lg:grid lg:gap-2;
+
+  grid-template-areas:
+    "img1 img1 img2 img3"
+    "img1 img1 img4 img5";
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.img1 {
+  grid-area: img1;
+  @apply lg:h-full;
+}
+
+.img1 img {
+  @apply lg:max-h-[608px];
+}
+
+.img2 {
+  grid-area: img2;
+}
+
+.img3 {
+  grid-area: img3;
+}
+
+.img4 {
+  grid-area: img4;
+}
+
+.img5 {
+  grid-area: img5;
+}
