@@ -8,7 +8,7 @@ import {requestsState} from "../atoms";
  */
 export function useOverlappedRequests(id) {
   // Recoil states
-  const allRequests = recoil.useRecoilState(requestsState);
+  const allRequests = recoil.useRecoilValue(requestsState);
   // React states
   const [selectedRequest, setSelectedRequest] = React.useState(null);
   const [overlaps, setOverlaps] = React.useState([]);
@@ -29,8 +29,21 @@ export function useOverlappedRequests(id) {
     if (!selectedRequest) return;
 
     const requests = allRequests.filter((req) => {
-      return true;
+      const start = req.checkIn.getTime();
+      const end = req.checkOut.getTime();
+      const selectedStart = selectedRequest.checkIn.getTime();
+      const selectedEnd = selectedRequest.checkOut.getTime();
+
+      if (selectedStart >= start && selectedStart <= end && req.id !== id) {
+        return true;
+      } else if (selectedEnd >= start && selectedEnd <= end && req.id !== id) {
+        return true;
+      }
+
+      return false;
     });
+
+    setOverlaps(requests);
   }
 
   React.useEffect(() => {
@@ -38,5 +51,10 @@ export function useOverlappedRequests(id) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, allRequests]);
 
-  React.useEffect(() => {}, [selectedRequest]);
+  React.useEffect(() => {
+    findOverlaps();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRequest]);
+
+  return {overlaps};
 }

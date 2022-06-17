@@ -4,9 +4,10 @@ import {days} from "../utils";
 import recoil from "recoil";
 import {roomsState} from "../atoms";
 import Chip from "../components/Chip";
-import ReviewRequestModal from "./ReviewRequestModal";
+import ReviewRequestModal from "./RequestReviewModal";
 
 const ReservationCard = ({
+  id,
   clientEmail,
   clientName,
   checkIn,
@@ -106,6 +107,7 @@ const ReservationCard = ({
         {showModal && (
           <ReviewRequestModal
             onClose={closeModal}
+            id={id}
             clientEmail={clientEmail}
             clientName={clientName}
             checkIn={checkIn}
