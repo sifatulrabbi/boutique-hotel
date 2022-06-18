@@ -3,6 +3,8 @@ import {BsXLg} from "react-icons/bs";
 import {v4} from "uuid";
 import {useOverlappedRequests} from "../../hooks";
 import SmallRequestView from "./SmallRequestView";
+import ConfirmModal from "./ConfirmModal";
+import CancelModal from "./CancelModal";
 
 const ReviewRequestModal = ({
   id,
@@ -15,6 +17,16 @@ const ReviewRequestModal = ({
   checkOut,
 }) => {
   const {overlaps} = useOverlappedRequests(id);
+  const [confirm, setConfirm] = React.useState(false);
+  const [cancel, setCancel] = React.useState(false);
+
+  function showConfirmState() {
+    setConfirm(true);
+  }
+
+  function showCancelState() {
+    setCancel(true);
+  }
 
   return (
     <>
@@ -83,15 +95,18 @@ const ReviewRequestModal = ({
 
         {/* Action buttons */}
         <div className="flex flex-row justify-between items-center">
-          <button className="btn-secondary" onClick={onClose}>
-            Cancel
+          <button className="btn-secondary" onClick={showCancelState}>
+            Remove
           </button>
-          <button className="btn-primary" onClick={onClose}>
+          <button className="btn-primary" onClick={showConfirmState}>
             Accept
           </button>
         </div>
       </div>
-      <div className="fixed z-[20] top-0 left-0 right-0 bottom-0 bg-black/50"></div>
+      <div className="fixed z-[20] top-0 left-0 right-0 bottom-0 bg-black/50" />
+
+      <ConfirmModal show={confirm} onClose={onClose} />
+      <CancelModal show={cancel} onClose={onClose} />
     </>
   );
 };
