@@ -15,6 +15,7 @@ const ReservationCard = ({
   roomId,
   cost,
   total,
+  allowReview,
 }) => {
   // Recoil states
   const rooms = recoil.useRecoilValue(roomsState);
@@ -97,27 +98,29 @@ const ReservationCard = ({
       </div>
 
       {/* Action button */}
-      <div className="flex lg:justify-end p-4">
-        <button
-          className="btn-primary w-full md:w-max"
-          onClick={() => setShowModal(true)}
-        >
-          Review
-        </button>
-        {showModal && (
-          <ReviewRequestModal
-            onClose={closeModal}
-            id={id}
-            clientEmail={clientEmail}
-            clientName={clientName}
-            checkIn={checkIn}
-            checkOut={checkOut}
-            roomId={roomId}
-            cost={cost}
-            total={total}
-          />
-        )}
-      </div>
+      {allowReview && (
+        <div className="flex lg:justify-end p-4">
+          <button
+            className="btn-primary w-full md:w-max"
+            onClick={() => setShowModal(true)}
+          >
+            Review
+          </button>
+          {showModal && (
+            <ReviewRequestModal
+              onClose={closeModal}
+              id={id}
+              clientEmail={clientEmail}
+              clientName={clientName}
+              checkIn={checkIn}
+              checkOut={checkOut}
+              roomId={roomId}
+              cost={cost}
+              total={total}
+            />
+          )}
+        </div>
+      )}
     </Card>
   );
 };

@@ -10,6 +10,8 @@ export const reservationsState = atom({
       clientEmail: "client.one@email.com",
       clientName: "Client One",
       roomId: 1,
+      cost: 400,
+      total: 1300,
     },
     {
       id: 2,
@@ -18,6 +20,8 @@ export const reservationsState = atom({
       clientEmail: "client.two@email.com",
       clientName: "Client Two",
       roomId: 2,
+      cost: 400,
+      total: 1300,
     },
     {
       id: 3,
@@ -26,6 +30,8 @@ export const reservationsState = atom({
       clientEmail: "client.three@email.com",
       clientName: "Client Three",
       roomId: 3,
+      cost: 400,
+      total: 1300,
     },
     {
       id: 4,
@@ -34,6 +40,8 @@ export const reservationsState = atom({
       clientEmail: "client.four@email.com",
       clientName: "Client Four",
       roomId: 4,
+      cost: 400,
+      total: 1300,
     },
   ],
 });

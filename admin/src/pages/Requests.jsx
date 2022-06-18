@@ -11,7 +11,7 @@ const Requests = () => {
   return (
     <PageWrapper className="gap-6 pt-[80px]">
       {requests.map((request) => (
-        <ReservationCard key={v4()} {...request} />
+        <ReservationCard key={v4()} {...request} allowReview />
       ))}
     </PageWrapper>
   );
