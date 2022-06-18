@@ -83,11 +83,11 @@ const ReviewRequestModal = ({
 
         {/* Action buttons */}
         <div className="flex flex-row justify-between items-center">
-          <button className="btn-primary" onClick={onClose}>
-            Accept
-          </button>
           <button className="btn-secondary" onClick={onClose}>
             Cancel
+          </button>
+          <button className="btn-primary" onClick={onClose}>
+            Accept
           </button>
         </div>
       </div>

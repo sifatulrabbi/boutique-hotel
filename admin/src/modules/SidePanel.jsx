@@ -1,9 +1,17 @@
+// Dependencies
 import React from "react";
+import {v4} from "uuid";
+// Components
 import {NavLink} from "react-router-dom";
 import {FaPaperPlane, FaBell, FaHome, FaBars, FaTimes} from "react-icons/fa";
-import {showSidePanelState} from "../atoms";
+// States
 import recoil from "recoil";
-import {v4} from "uuid";
+import {
+  showSidePanelState,
+  reservationsState,
+  roomsState,
+  requestsState,
+} from "../atoms";
 
 const linksButtons = [
   {
@@ -25,6 +33,9 @@ const linksButtons = [
 
 const SidePanel = () => {
   const [show, setShow] = recoil.useRecoilState(showSidePanelState);
+  const rooms = recoil.useRecoilValue(roomsState);
+  const reservations = recoil.useRecoilValue(reservationsState);
+  const requests = recoil.useRecoilValue(requestsState);
 
   /**
    * Toggle the side panel
@@ -58,7 +69,16 @@ const SidePanel = () => {
             }
           >
             <span className="text-xl">{icon}</span>
-            <span>{label}</span>
+            <span className="flex flex-row gap-2">
+              {label}
+              <span className="text-xs md:text-sm">
+                {path === "reservations"
+                  ? reservations.length
+                  : path === "requests"
+                  ? requests.length
+                  : rooms.length}
+              </span>
+            </span>
           </NavLink>
         ))}
       </aside>
