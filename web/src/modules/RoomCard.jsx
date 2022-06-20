@@ -1,5 +1,4 @@
 import React from "react";
-import {v4} from "uuid";
 import Chip from "../components/Chip";
 import {useRecoilValue} from "recoil";
 import {roomsViewIndex} from "../atoms";
@@ -7,9 +6,9 @@ import RoomCardBookingSection from "./RoomCardBookingSection";
 
 const RoomCard = ({
   index,
-  title,
-  desc,
-  rate,
+  name,
+  description,
+  cost,
   type,
   img,
   id,
@@ -43,18 +42,11 @@ const RoomCard = ({
         />
         {/* content part */}
         <div className="flex flex-col justify-start items-start gap-4">
-          <h4 className="font-bold text-textPrimary text-lg">{title}</h4>
-          <p className="text-sm leading-6">
-            {desc.map((str) => (
-              <React.Fragment key={v4()}>
-                <span>{str}</span>
-                <br />
-              </React.Fragment>
-            ))}
-          </p>
+          <h4 className="font-bold text-textPrimary text-lg">{name}</h4>
+          <p className="text-sm leading-6">{description}</p>
           <div className="flex flex-row justify-start items-center gap-4 mb-4">
             <Chip label={type} />
-            <Chip label={`$${rate}/night`} />
+            <Chip label={`$${cost}/night`} />
           </div>
 
           {/* Optional button for rooms page only */}
@@ -68,7 +60,7 @@ const RoomCard = ({
           )}
         </div>
       </div>
-      {notHidden && <RoomCardBookingSection show={showBooking} rate={rate} />}
+      {notHidden && <RoomCardBookingSection show={showBooking} rate={cost} />}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import {Suspense} from "react";
 import {Route, Routes} from "react-router-dom";
 import Navbar from "./modules/Navbar";
@@ -8,8 +9,29 @@ import RoomsPage from "./pages/RoomsPage";
 import ContactPage from "./pages/ContactPage";
 import LocationsPage from "./pages/LocationsPage";
 import LoginModal from "./modules/LoginModal";
+import recoil from "recoil";
+import {roomsState} from "./atoms";
+import {getApiUrl} from "./utils";
+import axios from "axios";
 
 function App() {
+  const setRooms = recoil.useSetRecoilState(roomsState);
+
+  async function getRooms() {
+    const resp = await axios.get(getApiUrl("/rooms/all"));
+
+    if (!resp.data.success) {
+      setRooms([]);
+    } else {
+      setRooms(resp.data.data);
+    }
+  }
+
+  React.useEffect(() => {
+    getRooms();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setRooms]);
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Navbar />

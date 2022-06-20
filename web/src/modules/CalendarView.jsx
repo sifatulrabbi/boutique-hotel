@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import {useCalendar} from "../hooks";
 import {v4} from "uuid";
@@ -6,7 +7,7 @@ import {useRecoilValue} from "recoil";
 import {monthlyCalendarsState} from "../atoms";
 
 const CalendarView = () => {
-  const [activeCal, setActiveCal] = React.useState();
+  const [activeCal, setActiveCal] = React.useState(null);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const monthlyCalendars = useRecoilValue(monthlyCalendarsState);
 
@@ -116,6 +117,8 @@ const CalendarView = () => {
           </div>
         ))}
       </div>
+
+      {/* Calendar bottom. From, To and clear selection button */}
       <div className="p-4 bg-gray-100 grid grid-cols-[0.6fr_1fr_1fr]">
         <span className="text-sm font-bold">
           From:{" "}

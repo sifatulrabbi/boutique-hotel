@@ -1,14 +1,16 @@
 import React from "react";
-import {roomsSelector} from "../../atoms";
-import {useRecoilValue} from "recoil";
+import {roomsState} from "../../atoms";
+import recoil from "recoil";
 import RoomCard from "../../modules/RoomCard";
 import {v4} from "uuid";
 import {FaChevronRight, FaChevronLeft} from "react-icons/fa";
 import {useHomePageRoomView} from "../../hooks";
 
 const RoomsSection = () => {
-  const roomsState = useRecoilValue(roomsSelector);
+  const rooms = recoil.useRecoilValue(roomsState);
   const {nextRoom, prevRoom} = useHomePageRoomView();
+
+  console.log(rooms);
 
   return (
     <div>
@@ -30,9 +32,10 @@ const RoomsSection = () => {
         >
           <FaChevronRight />
         </button>
-        {roomsState.map((room, index) => (
-          <RoomCard key={v4()} {...room} index={index} />
-        ))}
+        {rooms &&
+          rooms.map((room, index) => (
+            <RoomCard key={v4()} {...room} index={index} />
+          ))}
       </div>
     </div>
   );
