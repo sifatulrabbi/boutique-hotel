@@ -1,5 +1,4 @@
-import React from "react";
-import {Suspense} from "react";
+import React, {Suspense} from "react";
 import {Route, Routes} from "react-router-dom";
 import Navbar from "./modules/Navbar";
 import Footer from "./modules/Footer";
@@ -13,8 +12,11 @@ import recoil from "recoil";
 import {roomsState} from "./atoms";
 import {getApiUrl} from "./utils";
 import axios from "axios";
+import {useBookedDates} from "./hooks";
 
 function App() {
+  useBookedDates();
+
   const setRooms = recoil.useSetRecoilState(roomsState);
 
   async function getRooms() {

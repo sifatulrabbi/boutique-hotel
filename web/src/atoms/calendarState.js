@@ -24,3 +24,11 @@ export const monthlyCalendarsState = selector({
     return calendar.monthlyCalendar;
   },
 });
+
+/**
+ * State to store all the booked dates of the current month
+ */
+export const bookedDatesState = atom({
+  key: "BookedDatesState",
+  default: [],
+});

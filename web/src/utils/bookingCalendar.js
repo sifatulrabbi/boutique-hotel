@@ -31,9 +31,21 @@ export class BookingCalendar {
     const thirdCal = this.createMonthlyCalendar(thirdMonth);
 
     this.monthlyCalendar = [
-      {month: this.months[today.getMonth()].name, dates: firstCal},
-      {month: this.months[secondMonth.getMonth()].name, dates: secondCal},
-      {month: this.months[thirdMonth.getMonth()].name, dates: thirdCal},
+      {
+        monthIndex: today.getMonth(),
+        month: this.months[today.getMonth()].name,
+        dates: firstCal,
+      },
+      {
+        monthIndex: secondMonth.getMonth(),
+        month: this.months[secondMonth.getMonth()].name,
+        dates: secondCal,
+      },
+      {
+        monthIndex: thirdMonth.getMonth(),
+        month: this.months[thirdMonth.getMonth()].name,
+        dates: thirdCal,
+      },
     ];
   }
 
