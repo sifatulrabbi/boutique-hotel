@@ -8,6 +8,9 @@ const server = http.createServer(app);
 server.listen(config.PORT, async () => {
   await syncModels();
 
+  /**
+   * Create default rooms. Total rooms count 4
+   */
   for (let i = 0; i < 4; i++) {
     await Room.create({
       name: `Room ${i + 1}`,

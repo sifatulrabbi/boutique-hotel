@@ -1,5 +1,6 @@
-const {Request} = require("../models");
+const {Request, Room} = require("../models");
 const reservationsService = require("./reservations.service");
+const {calcTimeDifference} = require("../utils");
 
 /**
  * Add a reservation request
@@ -13,12 +14,23 @@ module.exports.addRequest = async function ({
   checkIn,
   checkOut,
 }) {
+  const requestedRoom = await Room.findByPk(roomId);
+  if (!requestedRoom) return null;
+
+  // Calculate the duration of the
+  const timeDifference = calcTimeDifference(
+    new Date(checkIn),
+    new Date(checkOut),
+  );
+
   const request = await Request.create({
     roomId,
     clientEmail,
     clientName,
     checkIn,
     checkOut,
+    cost: requestedRoom.cost,
+    total: requestedRoom.cost * timeDifference.days,
   });
 
   return request;
@@ -87,6 +99,8 @@ module.exports.acceptRequest = async function (requestId, duplicates) {
     checkOut: request.checkOut,
     clientEmail: request.clientEmail,
     clientName: request.clientName,
+    cost: request.cost,
+    total: request.total,
   });
 
   // Set accepted to true for the request

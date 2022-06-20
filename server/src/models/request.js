@@ -9,6 +9,10 @@ const {DataTypes} = require("sequelize");
  * @ClientEmail Email of the client
  * @ClientName Name of the client
  * @Accepted If the request is accepted or not
+ * @Canceled If the request is canceled or not
+ * @Cost The cost of the room
+ * @Total The total cost of the reservation
+ * @RoomId The of the associated room
  */
 const Request = db.define("request", {
   id: {
@@ -45,6 +49,14 @@ const Request = db.define("request", {
     type: DataTypes.BOOLEAN,
     default: false,
     allowNull: true,
+  },
+  cost: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  total: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
 });
 
