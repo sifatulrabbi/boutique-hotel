@@ -1,4 +1,4 @@
-const {DataTypes} = require("sequelize/types");
+const {DataTypes} = require("sequelize");
 const {db} = require("../core");
 
 /**
@@ -9,7 +9,7 @@ const {db} = require("../core");
  * @EndDate Booking end date
  * @RoomId Booked room id (Foreign key)
  */
-const Reservation = db.define({
+const Reservation = db.define("reservation", {
   id: {
     type: DataTypes.INTEGER,
     autoComplete: true,

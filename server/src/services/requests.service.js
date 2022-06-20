@@ -1,4 +1,5 @@
 const {Request} = require("../models");
+const {reservationsService} = require("./index");
 
 /**
  * Add a reservation request
@@ -66,4 +67,45 @@ module.exports.getRequestsByRoom = async function (roomId) {
 
   if (requests.length < 1) return null;
   return requests;
+};
+
+/**
+ * Accept a reservation request
+ *
+ * @param {number} requestId
+ * @param {number[]} duplicates
+ */
+module.exports.acceptRequest = async function (requestId, duplicates) {
+  const request = await Request.findByPk(requestId);
+
+  if (!request) return null;
+
+  // Create a reservation
+  const newReservation = await reservationsService.addReservations({
+    roomId: request.roomId,
+    checkIn: request.checkIn,
+    checkOut: request.checkOut,
+    clientEmail: request.clientEmail,
+    clientName: request.clientName,
+  });
+
+  // Set accepted to true for the request
+  request.update({
+    accepted: true,
+    canceled: false,
+  });
+
+  // Set canceled to true fot the duplicates
+  duplicates.forEach(async (id) => {
+    const request = await Request.findByPk(id);
+
+    if (request) {
+      request.update({canceled: true, accepted: false});
+    }
+  });
+
+  return {
+    reservation: newReservation,
+    request: request,
+  };
 };

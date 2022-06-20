@@ -7,14 +7,14 @@ const {Reservation} = require("../models");
  */
 module.exports.addReservations = async function ({
   roomId,
-  checkId,
+  checkIn,
   checkOut,
   clientEmail,
   clientName,
 }) {
   const reservation = await Reservation.create({
     roomId,
-    checkId,
+    checkIn,
     checkOut,
     clientEmail,
     clientName,

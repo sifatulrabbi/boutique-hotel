@@ -1,5 +1,5 @@
 const {db} = require("../core");
-const {DataTypes} = require("sequelize/types");
+const {DataTypes} = require("sequelize");
 
 /**
  * Request model
@@ -38,6 +38,12 @@ const Request = db.define("request", {
   },
   accepted: {
     type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: true,
+  },
+  canceled: {
+    type: DataTypes.BOOLEAN,
+    default: false,
     allowNull: true,
   },
 });
