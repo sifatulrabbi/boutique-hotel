@@ -87,7 +87,7 @@ module.exports.getRequestsByRoom = async function (roomId) {
  * @param {number} requestId
  * @param {number[]} duplicates
  */
-module.exports.acceptRequest = async function (requestId, duplicates) {
+module.exports.acceptRequest = async function (requestId, duplicates = []) {
   const request = await Request.findByPk(requestId);
 
   if (!request) return null;

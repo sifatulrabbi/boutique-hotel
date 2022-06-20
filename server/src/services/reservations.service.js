@@ -3,7 +3,7 @@ const {Reservation} = require("../models");
 /**
  * Add a reservation
  *
- * @param {{roomId: string; checkIn: Date, checkOut: Date, clientEmail: string; clientName: string}} data
+ * @param {{roomId: string; checkIn: Date, checkOut: Date, clientEmail: string; clientName: string; cost: number; total: number}} data
  */
 module.exports.addReservation = async function ({
   roomId,
@@ -11,6 +11,8 @@ module.exports.addReservation = async function ({
   checkOut,
   clientEmail,
   clientName,
+  cost,
+  total,
 }) {
   const reservation = await Reservation.create({
     roomId,
@@ -18,6 +20,8 @@ module.exports.addReservation = async function ({
     checkOut,
     clientEmail,
     clientName,
+    cost,
+    total,
   });
 
   return reservation;
