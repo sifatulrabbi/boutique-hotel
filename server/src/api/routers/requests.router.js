@@ -62,4 +62,28 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * Accept a request
+ *
+ * @method POST
+ * @path /requests/accept/:id
+ */
+router.post("/accept/:id", async (req, res) => {
+  try {
+    const {duplicates} = req.body;
+    const result = await requestsService.acceptRequest(
+      req.params.id,
+      duplicates,
+    );
+
+    if (!result) {
+      res.status(404).json({success: false, message: "Invalid request id"});
+    }
+
+    res.status(200).json({success: true, data: result});
+  } catch (err) {
+    res.status(500).json({success: false, message: err.message});
+  }
+});
+
 module.exports = router;
