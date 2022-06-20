@@ -35,6 +35,10 @@ const Room = db.define("room", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  img: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
 });
 
 /** Relations */

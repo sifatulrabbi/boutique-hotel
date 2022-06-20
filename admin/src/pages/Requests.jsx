@@ -9,7 +9,7 @@ const Requests = () => {
   const requests = recoil.useRecoilValue(requestsState);
 
   return (
-    <PageWrapper className="gap-6 pt-[80px]">
+    <PageWrapper className="gap-6 mt-[60px]">
       {requests.map((request) => (
         <ReservationCard key={v4()} {...request} allowReview />
       ))}
