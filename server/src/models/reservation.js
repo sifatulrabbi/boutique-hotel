@@ -12,7 +12,7 @@ const {db} = require("../core");
 const Reservation = db.define("reservation", {
   id: {
     type: DataTypes.INTEGER,
-    autoComplete: true,
+    autoIncrement: true,
     primaryKey: true,
   },
   checkIn: {

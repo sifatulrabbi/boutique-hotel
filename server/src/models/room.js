@@ -16,7 +16,7 @@ const Reservation = require("./reservation");
 const Room = db.define("room", {
   id: {
     type: DataTypes.INTEGER,
-    autoComplete: true,
+    autoIncrement: true,
     primaryKey: true,
   },
   name: {

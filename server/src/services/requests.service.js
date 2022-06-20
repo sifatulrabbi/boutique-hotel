@@ -1,5 +1,5 @@
 const {Request} = require("../models");
-const {reservationsService} = require("./index");
+const reservationsService = require("./reservations.service");
 
 /**
  * Add a reservation request
@@ -81,7 +81,7 @@ module.exports.acceptRequest = async function (requestId, duplicates) {
   if (!request) return null;
 
   // Create a reservation
-  const newReservation = await reservationsService.addReservations({
+  const newReservation = await reservationsService.addReservation({
     roomId: request.roomId,
     checkIn: request.checkIn,
     checkOut: request.checkOut,

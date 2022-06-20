@@ -51,7 +51,7 @@ router.get("/single/:id", async (req, res) => {
  * @method POST
  * @path /requests
  */
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const request = await requestsService.addRequest(req.body);
 

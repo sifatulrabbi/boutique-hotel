@@ -5,7 +5,7 @@ const {Reservation} = require("../models");
  *
  * @param {{roomId: string; checkIn: Date, checkOut: Date, clientEmail: string; clientName: string}} data
  */
-module.exports.addReservations = async function ({
+module.exports.addReservation = async function ({
   roomId,
   checkIn,
   checkOut,
