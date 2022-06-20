@@ -1,42 +1,21 @@
-import {atom} from "recoil";
+import {atom, selector} from "recoil";
+import {getApiUrl} from "../utils";
+import axios from "axios";
 
-export const fetchRoomsState = atom({
+export const fetchRoomsState = selector({
   key: "FetchRoomsState",
-  get: () => {
-    return;
+  get: async () => {
+    const resp = await axios.get(getApiUrl("/rooms/all"));
+
+    if (!resp.data.success) {
+      return [];
+    }
+
+    return resp.data.data;
   },
 });
 
 export const roomsState = atom({
   key: "RoomsState",
-  default: [
-    {
-      id: 1,
-      name: "Room One",
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet",
-      type: "Single",
-      cost: 400,
-    },
-    {
-      id: 2,
-      name: "Room Two",
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet",
-      type: "Double",
-      cost: 450,
-    },
-    {
-      id: 3,
-      name: "Room Three",
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet",
-      type: "Single",
-      cost: 300,
-    },
-    {
-      id: 4,
-      name: "Room Four",
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet",
-      type: "Double",
-      cost: 550,
-    },
-  ],
+  default: [],
 });
