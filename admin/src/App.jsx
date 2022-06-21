@@ -1,25 +1,22 @@
 // Dependencies
 import React, {Suspense} from "react";
+import {useFetchData} from "./hooks";
 // Components
 import {Routes, Route} from "react-router-dom";
 import Rooms from "./pages/Rooms";
 import Reservations from "./pages/Reservations";
 import Requests from "./pages/Requests";
 import SidePanel from "./modules/SidePanel";
-// States
-import recoil from "recoil";
-import {roomsState, fetchRoomsState} from "./atoms";
 
 const App = () => {
-  const fetchRoom = recoil.useRecoilValue(fetchRoomsState);
-  const setRooms = recoil.useSetRecoilState(roomsState);
+  const {getAllData} = useFetchData();
 
   /**
    * Update the rooms on page load
    */
   React.useEffect(() => {
-    setRooms(fetchRoom);
-  }, [fetchRoom, setRooms]);
+    getAllData();
+  }, [getAllData]);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
