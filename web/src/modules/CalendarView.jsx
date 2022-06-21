@@ -7,20 +7,11 @@ import recoil from "recoil";
 import {monthlyCalendarsState, bookedDatesState} from "../atoms";
 
 const CalendarView = () => {
-  /**
-   * @type {[{monthIndex: number; month: string; dates: Record<string, number[]>} | null, React.Dispatch<React.SetStateAction>]}
-   */
   const [activeCal, setActiveCal] = React.useState(null);
-  /**
-   * @type {[{monthIndex: number; dates: Record<string, number[]>} | null]}
-   */
   const [activeBookedDates, setActiveBookedDates] = React.useState(null);
   const [activeIndex, setActiveIndex] = React.useState(0);
-  /**
-   * @type {{monthIndex: number; dates: number[]}[]}
-   */
-  const bookedDates = recoil.useRecoilValue(bookedDatesState);
 
+  const bookedDates = recoil.useRecoilValue(bookedDatesState);
   const monthlyCalendars = recoil.useRecoilValue(monthlyCalendarsState);
 
   const {
@@ -83,7 +74,11 @@ const CalendarView = () => {
 
   React.useEffect(() => {
     updateBookedDate();
-  }, [activeCal, bookedDates]);
+  }, [bookedDates]);
+
+  React.useEffect(() => {
+    updateBookedDate();
+  }, [activeCal]);
 
   if (!activeCal) {
     return <div></div>;
@@ -150,7 +145,7 @@ const CalendarView = () => {
                     : ""
                   : ""
               }`}
-                onClick={() => handleSelected(date)}
+                onClick={() => handleSelected(date, activeBookedDates.dates)}
                 disabled={date === 0}
               >
                 {date === 0 ? "--" : date}

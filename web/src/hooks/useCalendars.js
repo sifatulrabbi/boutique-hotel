@@ -1,7 +1,7 @@
 import React from "react";
 import {useRecoilState} from "recoil";
 import {startDateState, endDateState, totalSelectedDatesState} from "../atoms";
-import {BookingCalendar} from "../utils";
+import {BookingCalendar, dateWithinBookedDate} from "../utils";
 
 export function useCalendar() {
   const calendar = new BookingCalendar(new Date());
@@ -12,11 +12,9 @@ export function useCalendar() {
   const [selectedDates, setSelectedDates] = useRecoilState(
     totalSelectedDatesState,
   );
-  const [monthlyCalendars, setMonthlyCalendars] = React.useState(
-    calendar.monthlyCalendar,
-  );
+  const [monthlyCalendars] = React.useState(calendar.monthlyCalendar);
 
-  function handleSelected(date) {
+  function handleSelected(date, bookedDates) {
     if (startDate > 0 && endDate > 0) {
       return;
     }
@@ -27,6 +25,17 @@ export function useCalendar() {
     } else {
       setEndDate(date);
       setIsStart(true);
+
+      // Determine if the start and end date is overlapping the already booked dates
+      const overlappingDate = dateWithinBookedDate(
+        startDate,
+        date,
+        bookedDates,
+      );
+      if (overlappingDate) {
+        setStartDate(0);
+        setEndDate(0);
+      }
     }
   }
 

@@ -12,11 +12,8 @@ import recoil from "recoil";
 import {roomsState} from "./atoms";
 import {getApiUrl} from "./utils";
 import axios from "axios";
-import {useBookedDates} from "./hooks";
 
 function App() {
-  useBookedDates();
-
   const setRooms = recoil.useSetRecoilState(roomsState);
 
   async function getRooms() {

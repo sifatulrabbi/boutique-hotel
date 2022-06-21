@@ -112,3 +112,32 @@ export function getBookedDatesArray(start, end) {
 
   return bookedDates;
 }
+
+/**
+ * Determine if the start and end date is overlapping the already booked dates
+ * @param {number} start
+ * @param {number} end
+ * @param {number} bookedDates
+ * @returns {boolean}
+ */
+export function dateWithinBookedDate(start, end, bookedDates) {
+  let isStartSmaller = false;
+  let isEndBigger = false;
+
+  bookedDates.forEach((date) => {
+    if (start < date) {
+      isStartSmaller = true;
+    } else {
+      isStartSmaller = false;
+    }
+
+    if (end > date) {
+      isEndBigger = true;
+    } else {
+      isEndBigger = false;
+    }
+  });
+
+  if (isStartSmaller && isEndBigger) return true;
+  return false;
+}

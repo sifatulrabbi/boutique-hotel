@@ -45,6 +45,4 @@ const Reservation = db.define("reservation", {
   },
 });
 
-/** Relations */
-
 module.exports = Reservation;

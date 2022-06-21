@@ -68,10 +68,8 @@ module.exports.removeAReservation = async function (id) {
  */
 module.exports.getReservationsByRoom = async function (roomId) {
   const reservations = await Reservation.findAll({
-    where: {roomId},
+    where: {roomId: roomId},
   });
-
-  if (reservations.length < 1) return null;
 
   return reservations;
 };

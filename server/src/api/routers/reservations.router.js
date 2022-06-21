@@ -37,12 +37,12 @@ router.get("/room/:roomId", async (req, res) => {
     );
 
     if (!reservations) {
-      res.status(200).json({success: true, data: reservations});
-    } else {
       res.status(404).json({
         success: false,
         message: "No reservations for the room",
       });
+    } else {
+      res.status(200).json({success: true, data: reservations});
     }
   } catch (err) {
     res.status(500).json({success: false, message: err.message});

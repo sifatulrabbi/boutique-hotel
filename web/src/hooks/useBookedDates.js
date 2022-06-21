@@ -1,35 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from "react";
 import {getApiUrl, getBookedDatesArray, mergeDuplicateDates} from "../utils";
 import recoil from "recoil";
 import axios from "axios";
-import {
-  monthlyCalendarsState,
-  bookedDatesState,
-  selectedRoomState,
-} from "../atoms";
+import {bookedDatesState} from "../atoms";
 
 export function useBookedDates() {
   const setBookedDates = recoil.useSetRecoilState(bookedDatesState);
-  const currentMonth = recoil.useRecoilValue(monthlyCalendarsState);
-  const selectedRoomId = recoil.useRecoilValue(selectedRoomState);
 
-  const [reservations, setReservations] = React.useState([]);
+  async function getReservations(roomId) {
+    const resp = await axios.get(getApiUrl(`/reservations/room/${roomId}`));
 
-  async function getReservations() {
-    const resp = await axios.get(
-      getApiUrl(`/reservations/room/${selectedRoomId}`),
-    );
-
-    if (resp.data.success) {
-      setReservations(resp.data.data);
+    if (resp.data.data) {
+      return resp.data.data;
     }
+
+    return [];
   }
 
-  function updateBookedDates() {
-    if (selectedRoomId < 1) return;
+  async function updateBookedDates(roomId) {
+    if (roomId < 1) {
+      setBookedDates(["none"]);
+      return;
+    }
 
+    const reservations = await getReservations(roomId);
     const bookedDates = [];
+
+    if (reservations.length < 1) {
+      setBookedDates(["none"]);
+      return;
+    }
 
     reservations.forEach((reservation) => {
       const start = new Date(reservation.checkIn);
@@ -49,11 +49,5 @@ export function useBookedDates() {
     }
   }
 
-  React.useEffect(() => {
-    getReservations();
-  }, []);
-
-  React.useEffect(() => {
-    updateBookedDates();
-  }, [reservations, currentMonth]);
+  return {updateBookedDates};
 }
