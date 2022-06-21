@@ -10,8 +10,6 @@ const RoomsSection = () => {
   const rooms = recoil.useRecoilValue(roomsState);
   const {nextRoom, prevRoom} = useHomePageRoomView();
 
-  console.log(rooms);
-
   return (
     <div>
       <h3 className="text-xl font-bold text-textPrimary text-center mb-8">

@@ -8,13 +8,56 @@ function getMonthEndDate(date) {
 }
 
 /**
+ * Merger all the dates and remove duplicates
+ * @param {{monthIndex: number, dates: number[]}[]} datesArr
+ */
+export function mergeDuplicateDates(datesArr) {
+  const newArr = [];
+
+  for (let i = 0; i < datesArr.length; i++) {
+    const matchedIndexes = [];
+
+    const baseMonth = datesArr[i];
+    const filteredArr = datesArr.filter((item, index) => {
+      if (item.monthIndex === baseMonth.monthIndex) {
+        matchedIndexes.push(index);
+        return item;
+      }
+    });
+
+    const val = filteredArr.reduce((prev, curr) => {
+      const data = {
+        monthIndex: prev.monthIndex,
+        dates: [...prev.dates, ...curr.dates],
+      };
+
+      data.dates = data.dates.filter(
+        (item, index, arr) => arr.indexOf(item) === index,
+      );
+
+      return data;
+    });
+
+    newArr.push(val);
+  }
+
+  const result = newArr.filter((item, index, arr) => {
+    const duplicate = arr.find((obj) => obj.monthIndex === item.monthIndex);
+
+    return arr.indexOf(duplicate) === index;
+  });
+
+  return result;
+}
+
+/**
  * Get an array of booked dates and the month index
  * @param {Date} start
  * @param {Date} end
  * @returns {{monthIndex: number; dates: number[]}[]}
  */
 export function getBookedDatesArray(start, end) {
-  const startMonth = 5;
+  const startMonth = start.getMonth();
   const bookedDates = [];
 
   // Check if the startMonth is equal to the starting date

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import recoil from "recoil";
-import {getApiUrl, getBookedDatesArray} from "../utils";
+import {getApiUrl, getBookedDatesArray, mergeDuplicateDates} from "../utils";
 import axios from "axios";
 import {monthlyCalendarsState, bookedDatesState} from "../atoms";
 
@@ -21,18 +21,22 @@ export function useBookedDates() {
   function updateBookedDates() {
     const bookedDates = [];
 
-    currentMonth.forEach((month) => {
-      reservations.forEach((reservation) => {
-        const start = new Date(reservation.checkIn);
-        const end = new Date(reservation.checkOut);
+    reservations.forEach((reservation) => {
+      const start = new Date(reservation.checkIn);
+      const end = new Date(reservation.checkOut);
 
-        const bookedDatesArray = getBookedDatesArray(start, end);
-        bookedDates.push([...bookedDatesArray]);
-      });
+      const bookedDatesArray = getBookedDatesArray(start, end);
+      bookedDates.push([...bookedDatesArray]);
     });
 
-    console.log(bookedDates);
-    setBookedDates(bookedDates);
+    if (bookedDates.length > 0) {
+      const mergedDates = mergeDuplicateDates(
+        bookedDates.reduce((prev, curr) => [...prev, ...curr]),
+      );
+
+      console.log(mergedDates);
+      setBookedDates(mergedDates);
+    }
   }
 
   React.useEffect(() => {

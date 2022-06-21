@@ -23,10 +23,9 @@ function App() {
     const resp = await axios.get(getApiUrl("/rooms/all"));
 
     if (!resp.data.success) {
-      setRooms([]);
-    } else {
-      setRooms(resp.data.data);
+      return;
     }
+    setRooms(resp.data.data);
   }
 
   React.useEffect(() => {
