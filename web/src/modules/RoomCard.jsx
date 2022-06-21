@@ -2,7 +2,7 @@ import React from "react";
 import RoomCardBookingSection from "./RoomCardBookingSection";
 import Chip from "../components/Chip";
 import recoil from "recoil";
-import {roomsViewIndex} from "../atoms";
+import {roomsViewIndex, selectedRoomState} from "../atoms";
 import {useBookedDates} from "../hooks";
 
 const RoomCard = ({
@@ -16,22 +16,32 @@ const RoomCard = ({
   notHidden,
   showButton,
 }) => {
-  const roomIndex = recoil.useRecoilValue(roomsViewIndex);
   const [showBooking, setShowBooking] = React.useState(false);
+
+  const roomIndex = recoil.useRecoilValue(roomsViewIndex);
+  const setSelectedRoom = recoil.useSetRecoilState(selectedRoomState);
 
   const {updateBookedDates} = useBookedDates();
 
   function toggleShow() {
     if (!showBooking) {
+      // Update the selected room's index
+      setSelectedRoom(id);
+
+      // Update the booking dates and fetch the already booked dates of the month
       updateBookedDates(id)
         .then(() => {
+          // Show the booking calendar section
           setShowBooking(true);
         })
         .catch((err) => {
           console.log(err);
+          // Do not show the booking calendar section if there is an error while fetching data from the server
           setShowBooking(false);
         });
     } else {
+      // Remove the selected room's index
+      setSelectedRoom(-1);
       setShowBooking(false);
     }
   }

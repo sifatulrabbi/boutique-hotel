@@ -32,3 +32,11 @@ export const bookedDatesState = atom({
   key: "BookedDatesState",
   default: [],
 });
+
+/**
+ * State to store the currently selected month's index
+ */
+export const selectedMonthState = atom({
+  key: "ActiveMonthState",
+  default: -1,
+});

@@ -1,9 +1,13 @@
 import React from "react";
 import {useRecoilState} from "recoil";
 import {showLoginModalState} from "../atoms";
+import {useSendBookingRequest} from "../hooks";
 
 const LoginModal = () => {
   const [showModal, setShowModal] = useRecoilState(showLoginModalState);
+
+  const {sendBookingRequest, handleEmail, handleName, name, email} =
+    useSendBookingRequest();
 
   function hideModal() {
     setShowModal(false);
@@ -11,7 +15,15 @@ const LoginModal = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    hideModal();
+
+    sendBookingRequest()
+      .then(() => {
+        hideModal();
+      })
+      .catch((err) => {
+        console.log(err);
+        hideModal();
+      });
   }
 
   return (
@@ -27,11 +39,15 @@ const LoginModal = () => {
         >
           <input
             type="text"
+            value={name}
+            onChange={handleName}
             placeholder="Enter your name"
             className="p-3 rounded-2xl text-textPrimary placeholder:text-textLight w-full bg-gray-100 focus:outline-primary-400"
           />
           <input
             type="email"
+            value={email}
+            onChange={handleEmail}
             placeholder="Enter your email address"
             className="p-3 rounded-2xl text-textPrimary placeholder:text-textLight w-full bg-gray-100 focus:outline-primary-400"
           />

@@ -4,7 +4,11 @@ import {useCalendar} from "../hooks";
 import {v4} from "uuid";
 import {FaChevronRight, FaChevronLeft} from "react-icons/fa";
 import recoil from "recoil";
-import {monthlyCalendarsState, bookedDatesState} from "../atoms";
+import {
+  monthlyCalendarsState,
+  bookedDatesState,
+  selectedMonthState,
+} from "../atoms";
 
 const CalendarView = () => {
   const [activeCal, setActiveCal] = React.useState(null);
@@ -13,6 +17,7 @@ const CalendarView = () => {
 
   const bookedDates = recoil.useRecoilValue(bookedDatesState);
   const monthlyCalendars = recoil.useRecoilValue(monthlyCalendarsState);
+  const setSelectedMonth = recoil.useSetRecoilState(selectedMonthState);
 
   const {
     days,
@@ -60,6 +65,9 @@ const CalendarView = () => {
    */
   function updateBookedDate() {
     if (!activeCal) return;
+
+    // Update the selected month's index
+    setSelectedMonth(activeCal.monthIndex);
 
     const data = bookedDates.find(
       (item) => item.monthIndex === activeCal.monthIndex,
@@ -145,7 +153,12 @@ const CalendarView = () => {
                     : ""
                   : ""
               }`}
-                onClick={() => handleSelected(date, activeBookedDates.dates)}
+                onClick={() =>
+                  handleSelected(
+                    date,
+                    activeBookedDates ? activeBookedDates.dates : [],
+                  )
+                }
                 disabled={date === 0}
               >
                 {date === 0 ? "--" : date}
