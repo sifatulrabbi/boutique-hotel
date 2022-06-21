@@ -13,10 +13,12 @@ export function useSendBookingRequest() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
 
-  const checkInDate = recoil.useRecoilValue(startDateState);
-  const checkOutDate = recoil.useRecoilValue(endDateState);
-  const selectedRoomId = recoil.useRecoilValue(selectedRoomState);
-  const selectedMonthIndex = recoil.useRecoilValue(selectedMonthState);
+  const [checkInDate, setCheckInDate] = recoil.useRecoilState(startDateState);
+  const [checkOutDate, setCheckOutDate] = recoil.useRecoilState(endDateState);
+  const [selectedRoomId, setSelectedRoomId] =
+    recoil.useRecoilState(selectedRoomState);
+  const [selectedMonthIndex, setSelectedMonthIndex] =
+    recoil.useRecoilState(selectedMonthState);
 
   function handleEmail(e) {
     setEmail(e.currentTarget.value);
@@ -56,6 +58,14 @@ export function useSendBookingRequest() {
     });
 
     if (resp.data.success) {
+      console.log(resp.data.data);
+
+      // Clear selection
+      setSelectedMonthIndex(-1);
+      setCheckInDate(0);
+      setCheckOutDate(0);
+      setSelectedRoomId(-1);
+
       return true;
     }
 

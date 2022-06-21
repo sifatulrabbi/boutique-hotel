@@ -152,6 +152,12 @@ const CalendarView = () => {
                     ? "line-through pointer-events-none"
                     : ""
                   : ""
+              }
+              ${
+                activeCal.monthIndex === new Date().getMonth() &&
+                new Date().getDate() > date
+                  ? "line-through pointer-events-none"
+                  : ""
               }`}
                 onClick={() =>
                   handleSelected(
