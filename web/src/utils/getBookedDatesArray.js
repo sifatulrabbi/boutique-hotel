@@ -23,6 +23,7 @@ export function mergeDuplicateDates(datesArr) {
         matchedIndexes.push(index);
         return item;
       }
+      return false;
     });
 
     const val = filteredArr.reduce((prev, curr) => {

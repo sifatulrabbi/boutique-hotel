@@ -19,3 +19,9 @@ export const roomsState = atom({
   key: "roomsState",
   default: [],
 });
+
+// State of the currently selected room
+export const selectedRoomState = atom({
+  key: "selectedRoomState",
+  default: -1,
+});

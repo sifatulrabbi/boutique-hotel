@@ -3,13 +3,25 @@ import React from "react";
 import {useCalendar} from "../hooks";
 import {v4} from "uuid";
 import {FaChevronRight, FaChevronLeft} from "react-icons/fa";
-import {useRecoilValue} from "recoil";
-import {monthlyCalendarsState} from "../atoms";
+import recoil from "recoil";
+import {monthlyCalendarsState, bookedDatesState} from "../atoms";
 
 const CalendarView = () => {
+  /**
+   * @type {[{monthIndex: number; month: string; dates: Record<string, number[]>} | null, React.Dispatch<React.SetStateAction>]}
+   */
   const [activeCal, setActiveCal] = React.useState(null);
+  /**
+   * @type {[{monthIndex: number; dates: Record<string, number[]>} | null]}
+   */
+  const [activeBookedDates, setActiveBookedDates] = React.useState(null);
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const monthlyCalendars = useRecoilValue(monthlyCalendarsState);
+  /**
+   * @type {{monthIndex: number; dates: number[]}[]}
+   */
+  const bookedDates = recoil.useRecoilValue(bookedDatesState);
+
+  const monthlyCalendars = recoil.useRecoilValue(monthlyCalendarsState);
 
   const {
     days,
@@ -22,6 +34,9 @@ const CalendarView = () => {
     resetDates,
   } = useCalendar();
 
+  /**
+   * Change the month to the next
+   */
   function changeCalForward() {
     setActiveCal(() => {
       if (activeIndex + 1 > monthlyCalendars.length - 1) {
@@ -34,6 +49,9 @@ const CalendarView = () => {
     });
   }
 
+  /**
+   * Change the month to the previous month
+   */
   function changeCalPrevious() {
     setActiveCal(() => {
       if (activeIndex - 1 < 0) {
@@ -46,9 +64,26 @@ const CalendarView = () => {
     });
   }
 
+  /**
+   * Update the booked dates state to show only the booked dates for the active month
+   */
+  function updateBookedDate() {
+    if (!activeCal) return;
+
+    const data = bookedDates.find(
+      (item) => item.monthIndex === activeCal.monthIndex,
+    );
+
+    setActiveBookedDates(data ? data : null);
+  }
+
   React.useEffect(() => {
     setActiveCal(monthlyCalendars[0]);
   }, []);
+
+  React.useEffect(() => {
+    updateBookedDate();
+  }, [activeCal, bookedDates]);
 
   if (!activeCal) {
     return <div></div>;
@@ -106,7 +141,14 @@ const CalendarView = () => {
                   ? "bg-primary-400 text-white"
                   : selectedDates.includes(date)
                   ? "bg-primary-100"
-                  : "hover:bg-gray-100 "
+                  : "hover:bg-gray-100"
+              }
+              ${
+                activeBookedDates
+                  ? activeBookedDates.dates.includes(date)
+                    ? "line-through pointer-events-none"
+                    : ""
+                  : ""
               }`}
                 onClick={() => handleSelected(date)}
                 disabled={date === 0}

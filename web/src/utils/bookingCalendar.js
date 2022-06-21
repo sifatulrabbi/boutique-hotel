@@ -16,6 +16,9 @@ export class BookingCalendar {
 
   days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+  /**
+   * @type {{monthIndex: number; month: string; dates: Record<string, number[]>}[]}
+   */
   monthlyCalendar = [];
 
   constructor() {

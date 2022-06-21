@@ -1,8 +1,8 @@
 import React from "react";
-import Chip from "../components/Chip";
-import {useRecoilValue} from "recoil";
-import {roomsViewIndex} from "../atoms";
 import RoomCardBookingSection from "./RoomCardBookingSection";
+import Chip from "../components/Chip";
+import recoil from "recoil";
+import {roomsViewIndex, selectedRoomState} from "../atoms";
 
 const RoomCard = ({
   index,
@@ -15,11 +15,22 @@ const RoomCard = ({
   notHidden,
   showButton,
 }) => {
-  const roomIndex = useRecoilValue(roomsViewIndex);
+  const roomIndex = recoil.useRecoilValue(roomsViewIndex);
+  const setSelectedRoom = recoil.useSetRecoilState(selectedRoomState);
   const [showBooking, setShowBooking] = React.useState(false);
 
   function toggleShow() {
-    setShowBooking((prev) => !prev);
+    setShowBooking((prev) => {
+      const state = !prev;
+
+      if (state) {
+        setSelectedRoom(id);
+      } else {
+        setSelectedRoom(-1);
+      }
+
+      return state;
+    });
   }
 
   return (
