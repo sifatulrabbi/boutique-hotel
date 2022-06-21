@@ -33,7 +33,11 @@ export function useFetchData() {
   }
 
   async function getAllData() {
-    await Promise.all(getRoomsData(), getRequestsData(), getReservationsData());
+    await Promise.all([
+      getRoomsData(),
+      getRequestsData(),
+      getReservationsData(),
+    ]);
   }
 
   return {

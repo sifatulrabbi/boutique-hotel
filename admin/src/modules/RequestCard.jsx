@@ -60,23 +60,23 @@ const ReservationCard = ({
       <div className="flex flex-row gap-4 items-center justify-center">
         <div className="flex flex-col justify-center items-center h-full py-1 w-[62px] bg-gray-100">
           <span className="font-bold">
-            {checkIn.getDate() < 10
-              ? `0${checkIn.getDate()}`
-              : checkIn.getDate()}
+            {new Date(checkIn).getDate() < 10
+              ? `0${new Date(checkIn).getDate()}`
+              : new Date(checkIn).getDate()}
           </span>
           <span className="uppercase text-xs tracking-wider">
-            {days[checkIn.getDay()]}
+            {days[new Date(checkIn).getDay()]}
           </span>
         </div>
         <span>To</span>
         <div className="flex flex-col justify-center items-center h-full py-1 w-[62px] bg-gray-100">
           <span className="font-bold">
-            {checkOut.getDate() < 10
-              ? `0${checkOut.getDate()}`
-              : checkOut.getDate()}
+            {new Date(checkOut).getDate() < 10
+              ? `0${new Date(checkOut).getDate()}`
+              : new Date(checkOut).getDate()}
           </span>
           <span className="uppercase text-xs tracking-wider">
-            {days[checkOut.getDay()]}
+            {days[new Date(checkOut).getDay()]}
           </span>
         </div>
       </div>
@@ -112,8 +112,8 @@ const ReservationCard = ({
               id={id}
               clientEmail={clientEmail}
               clientName={clientName}
-              checkIn={checkIn}
-              checkOut={checkOut}
+              checkIn={new Date(checkIn)}
+              checkOut={new Date(checkOut)}
               roomId={roomId}
               cost={cost}
               total={total}

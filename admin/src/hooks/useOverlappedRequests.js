@@ -29,10 +29,10 @@ export function useOverlappedRequests(id) {
     if (!selectedRequest) return;
 
     const requests = allRequests.filter((req) => {
-      const start = req.checkIn.getTime();
-      const end = req.checkOut.getTime();
-      const selectedStart = selectedRequest.checkIn.getTime();
-      const selectedEnd = selectedRequest.checkOut.getTime();
+      const start = new Date(req.checkIn).getTime();
+      const end = new Date(req.checkOut).getTime();
+      const selectedStart = new Date(selectedRequest.checkIn).getTime();
+      const selectedEnd = new Date(selectedRequest.checkOut).getTime();
 
       if (selectedStart >= start && selectedStart <= end && req.id !== id) {
         return true;
