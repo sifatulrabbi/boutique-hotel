@@ -5,6 +5,10 @@ const {requestsService} = require("./services");
  * Add mock rooms for testing
  */
 async function addMockRooms() {
+  // Check for previous rooms
+  const prevData = await Room.findAll();
+  if (prevData.length > 0) return;
+
   const rooms = [];
 
   const roomImages = [
@@ -34,6 +38,10 @@ async function addMockRooms() {
  * Add mock requests for testing
  */
 async function addMockRequestsData(rooms) {
+  // Check for previous requests
+  const prevRequests = await requestsService.getAllRequests();
+  if (prevRequests.length > 0) return;
+
   const today = new Date();
   const requests = [];
 

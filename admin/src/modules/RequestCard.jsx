@@ -43,7 +43,7 @@ const ReservationCard = ({
   }, [rooms, roomId]);
 
   return (
-    <Card className="grid grid-cols-1 lg:grid-cols-5 items-center p-0">
+    <Card className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr_1fr_1fr] items-center p-0">
       {/* Rooms information */}
       {room && (
         <div className="flex flex-col gap-2 text-textPrimary p-4 pb-0 md:pb-4">

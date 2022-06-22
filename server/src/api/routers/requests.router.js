@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {requestsService} = require("../../services");
+const {requestsService, emailsService} = require("../../services");
 
 const router = Router();
 
@@ -80,6 +80,13 @@ router.post("/accept/:id", async (req, res) => {
       res.status(404).json({success: false, message: "Invalid request id"});
     }
 
+    // Send email
+    await emailsService.sendRequestAcceptedMail(
+      result.request.clientEmail,
+      result.request.clientName,
+      result.request.roomId,
+    );
+
     res.status(200).json({success: true, data: result});
   } catch (err) {
     res.status(500).json({success: false, message: err.message});
@@ -97,6 +104,13 @@ router.delete("/:id", async (req, res) => {
     const result = await requestsService.removeRequest(req.params.id);
 
     if (result) {
+      // Send email
+      await emailsService.sendRequestRejectedMail(
+        result.clientEmail,
+        result.clientName,
+        result.roomId,
+      );
+
       res.status(200).json({success: true, message: "Request removed"});
     } else {
       res.status(404).json({success: false, message: "Request not found"});

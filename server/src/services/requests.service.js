@@ -46,7 +46,7 @@ module.exports.removeRequest = async function (id) {
   if (!request) return false;
 
   await request.destroy();
-  return true;
+  return request;
 };
 
 /**
