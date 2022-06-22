@@ -1,4 +1,5 @@
 import React from "react";
+import {BsXLg} from "react-icons/bs";
 import {useRecoilState} from "recoil";
 import {showLoginModalState} from "../atoms";
 import {useSendBookingRequest} from "../hooks";
@@ -29,9 +30,17 @@ const LoginModal = () => {
   return (
     <>
       <div
-        className={`flex-col rounded-3xl p-4 bg-white shadow-md z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] min-w-[300px] 
+        className={`flex-col rounded-3xl p-4 bg-white shadow-md z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[500px] min-w-[280px] 
       ${showModal ? "flex" : "hidden"}`}
       >
+        <div className="flex flex-between items-start gap-8">
+          <h5 className="text-textPrimary mb-8">
+            Please enter you full name and email to submit the request
+          </h5>
+          <button className="text-red-500" onClick={hideModal}>
+            <BsXLg />
+          </button>
+        </div>
         <form
           action="submit"
           onSubmit={handleSubmit}
