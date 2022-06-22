@@ -27,7 +27,7 @@ export function useFetchData() {
   async function getReservationsData() {
     const resp = await axios.get(getApiUrl("/reservations/all"));
 
-    if (resp.data.reservations) {
+    if (resp.data.success) {
       setReservations(resp.data.data);
     }
   }

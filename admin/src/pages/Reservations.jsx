@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Dependencies
 import React from "react";
 import {v4} from "uuid";
+import {useFetchData} from "../hooks";
 // Components
 import PageWrapper from "../components/PageWrapper";
 import RequestCard from "../modules/RequestCard";
@@ -10,6 +12,12 @@ import {reservationsState} from "../atoms";
 
 const Reservations = () => {
   const reservations = recoil.useRecoilValue(reservationsState);
+
+  const {getReservationsData} = useFetchData();
+
+  React.useEffect(() => {
+    getReservationsData();
+  }, []);
 
   return (
     <PageWrapper className="gap-6 mt-[60px]">

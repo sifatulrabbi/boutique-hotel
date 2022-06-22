@@ -1,10 +1,37 @@
 // Dependencies
 import React from "react";
+import {useFetchData} from "../../hooks";
+import {getApiUrl} from "../../utils";
+import axios from "axios";
 // Components
 import Overlay from "../../components/Overlay";
-// States
 
-const ConfirmModal = ({show, onClose}) => {
+const ConfirmModal = ({show, onClose, requestId, duplicates}) => {
+  const {getReservationsData} = useFetchData();
+
+  async function sendAcceptRequest() {
+    const duplicateIds = duplicates.map((duplicate) => duplicate.id);
+
+    const result = await axios.post(
+      getApiUrl(`/requests/accept/${requestId}`),
+      {
+        duplicates: duplicateIds,
+      },
+    );
+
+    if (result.data.success) {
+      console.log("Request accepted");
+      console.log(result.data.data);
+
+      await getReservationsData();
+
+      onClose();
+    } else {
+      console.error("Unable to accept the request");
+      console.error(result.data.message);
+    }
+  }
+
   return (
     <>
       <div
@@ -22,7 +49,7 @@ const ConfirmModal = ({show, onClose}) => {
           <button className="btn-secondary" onClick={onClose}>
             Cancel
           </button>
-          <button className="btn-primary" onClick={onClose}>
+          <button className="btn-primary" onClick={sendAcceptRequest}>
             Okay
           </button>
         </div>

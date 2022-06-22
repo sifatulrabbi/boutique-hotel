@@ -72,9 +72,9 @@ const SidePanel = () => {
             <span className="flex flex-row gap-2">
               {label}
               <span className="text-xs md:text-sm">
-                {path === "reservations"
+                {path === "/reservations"
                   ? reservations.length
-                  : path === "requests"
+                  : path === "/requests"
                   ? requests.length
                   : rooms.length}
               </span>

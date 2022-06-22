@@ -80,7 +80,7 @@ const ReviewRequestModal = ({
           </div>
 
           {/* Overlaps view */}
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
             <span className="inline-block mb-4 text-lg text-textPrimary font-bold">
               Overlaps
             </span>
@@ -105,8 +105,13 @@ const ReviewRequestModal = ({
       </div>
       <div className="fixed z-[20] top-0 left-0 right-0 bottom-0 bg-black/50" />
 
-      <ConfirmModal show={confirm} onClose={onClose} />
-      <CancelModal show={cancel} onClose={onClose} />
+      <ConfirmModal
+        show={confirm}
+        onClose={onClose}
+        requestId={id}
+        duplicates={overlaps}
+      />
+      <CancelModal show={cancel} onClose={onClose} requestId={id} />
     </>
   );
 };
