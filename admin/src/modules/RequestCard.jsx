@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../components/Card";
-import {days} from "../utils";
+import {months} from "../utils";
 import recoil from "recoil";
 import {roomsState} from "../atoms";
 import Chip from "../components/Chip";
@@ -16,6 +16,8 @@ const ReservationCard = ({
   cost,
   total,
   allowReview,
+  accepted,
+  canceled,
 }) => {
   // Recoil states
   const rooms = recoil.useRecoilValue(roomsState);
@@ -65,7 +67,7 @@ const ReservationCard = ({
               : new Date(checkIn).getDate()}
           </span>
           <span className="uppercase text-xs tracking-wider">
-            {days[new Date(checkIn).getDay()]}
+            {months[new Date(checkIn).getMonth()]}
           </span>
         </div>
         <span>To</span>
@@ -76,7 +78,7 @@ const ReservationCard = ({
               : new Date(checkOut).getDate()}
           </span>
           <span className="uppercase text-xs tracking-wider">
-            {days[new Date(checkOut).getDay()]}
+            {months[new Date(checkOut).getMonth()]}
           </span>
         </div>
       </div>
@@ -101,10 +103,12 @@ const ReservationCard = ({
       {allowReview && (
         <div className="flex lg:justify-end p-4">
           <button
-            className="btn-primary w-full md:w-max"
+            className={`btn-primary w-full md:w-max disabled:bg-transparent 
+            ${canceled ? "text-red-600" : "disabled:text-primary-400"}`}
             onClick={() => setShowModal(true)}
+            disabled={accepted || canceled}
           >
-            Review
+            {canceled ? "Canceled" : accepted ? "Resolved" : "Review"}
           </button>
           {showModal && (
             <ReviewRequestModal

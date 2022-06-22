@@ -74,9 +74,9 @@ const SidePanel = () => {
               <span className="text-xs md:text-sm">
                 {path === "/reservations"
                   ? reservations.length
-                  : path === "/requests"
-                  ? requests.length
-                  : rooms.length}
+                  : path === "/rooms"
+                  ? rooms.length
+                  : requests.length}
               </span>
             </span>
           </NavLink>
