@@ -1,6 +1,7 @@
 // Dependencies
 import React from "react";
 import {v4} from "uuid";
+import {useAuth} from "../hooks";
 // Components
 import {NavLink} from "react-router-dom";
 import {FaPaperPlane, FaBell, FaHome, FaBars, FaTimes} from "react-icons/fa";
@@ -36,6 +37,8 @@ const SidePanel = () => {
   const rooms = recoil.useRecoilValue(roomsState);
   const reservations = recoil.useRecoilValue(reservationsState);
   const requests = recoil.useRecoilValue(requestsState);
+
+  const {logout} = useAuth();
 
   /**
    * Toggle the side panel
@@ -81,6 +84,9 @@ const SidePanel = () => {
             </span>
           </NavLink>
         ))}
+        <button className="btn-secondary mt-6 w-full" onClick={logout}>
+          Logout
+        </button>
       </aside>
     </>
   );
