@@ -11,12 +11,12 @@
 ### The reservation process
 
 - It will start from the user's side. The user will choose a room and select the time period (check-in and check-out dates).
-- Then the user will provide their email and name, then will submit the request
-- The request will arrive at the API, the API will save the request as a new row in the table with the room Id
+- Then the user will provide their email, name, and submit the request
+- The API will save the request the database.
 - The Admin will be able to see all the requests from the requests panel.
 - The admin will select a request and either accept it or reject it.
-- Upon accepting a new row will be added to the reservations table with the details from the request data and an email will be sent to the client's email regarding the reservation.
-- Thus rejecting will trigger a similar email sent event but the email will be different and will be saying that the reservation failed. Optionally the admin will be able to modify the email if he/she wants to.
+- Upon accepting a Request all the other overrides/duplicate requests will be canceled
+- Canceling/accepting a request will
 
 ### Accepting the reservation
 
