@@ -1,9 +1,31 @@
 // Dependencies
 import React from "react";
+import {useFetchData} from "../../hooks";
+import axios from "axios";
+import {getApiUrl} from "../../utils";
 // Components
 import Overlay from "../../components/Overlay";
 
-const CancelModal = ({show, onClose}) => {
+const CancelModal = ({show, onClose, requestId}) => {
+  const {getRequestsData} = useFetchData();
+
+  async function cancelRequest() {
+    try {
+      const resp = await axios.delete(getApiUrl(`/requests/${requestId}`));
+
+      if (resp.data.success) {
+        await getRequestsData();
+        onClose();
+
+        console.log("Request canceled");
+      } else {
+        console.error("Unable to cancel request");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <>
       <div
@@ -20,14 +42,9 @@ const CancelModal = ({show, onClose}) => {
           <button className="btn-secondary" onClick={onClose}>
             Cancel
           </button>
-          <div className="flex flex-row items-center gap-4">
-            <button className="btn-primary" onClick={onClose}>
-              Custom Email
-            </button>
-            <button className="btn-primary" onClick={onClose}>
-              Okay
-            </button>
-          </div>
+          <button className="btn-primary" onClick={cancelRequest}>
+            Okay
+          </button>
         </div>
       </div>
       {show && <Overlay z={25} />}

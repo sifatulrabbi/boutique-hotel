@@ -43,8 +43,10 @@ module.exports.addRequest = async function ({
  */
 module.exports.removeRequest = async function (id) {
   const request = await Request.findByPk(id);
+  if (!request) return false;
 
-  return request;
+  await request.destroy();
+  return true;
 };
 
 /**

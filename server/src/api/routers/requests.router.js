@@ -86,4 +86,29 @@ router.post("/accept/:id", async (req, res) => {
   }
 });
 
+/**
+ * Remove a request
+ *
+ * @method DELETE
+ * @path /requests/:id
+ */
+router.delete("/:id", async (req, res) => {
+  try {
+    const result = await requestsService.removeRequest(req.params.id);
+
+    if (result) {
+      res.status(200).json({success: true, message: "Request removed"});
+    } else {
+      res.status(404).json({success: false, message: "Request not found"});
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal error",
+      error: err.message,
+    });
+  }
+});
+
 module.exports = router;
