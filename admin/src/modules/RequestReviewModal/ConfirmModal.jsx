@@ -11,6 +11,7 @@ const ConfirmModal = ({show, onClose, requestId, duplicates}) => {
 
   async function sendAcceptRequest() {
     const duplicateIds = duplicates.map((duplicate) => duplicate.id);
+    console.log(duplicateIds, requestId);
 
     const result = await axios.post(
       getApiUrl(`/requests/accept/${requestId}`),

@@ -28,19 +28,23 @@ module.exports.sendRequestAcceptedMail = async function (
   clientName,
   roomName,
 ) {
-  const mail = {
-    from: `Boutique House <${config.SMTP_EMAIL}>`,
-    to: clientEmail,
-    subject: "Your reservation request on Boutique House has been accepted",
-    text: `Hi ${clientName}, Your request for room ${roomName} has been accepted.`,
-    html: `<p>Hi ${clientName},</p><br/>
+  try {
+    const mail = {
+      from: `Boutique House <${config.SMTP_EMAIL}>`,
+      to: clientEmail,
+      subject: "Your reservation request on Boutique House has been accepted",
+      text: `Hi ${clientName}, Your request for room ${roomName} has been accepted.`,
+      html: `<p>Hi ${clientName},</p><br/>
           <p>Your reservation request for room <strong>${roomName}</strong> has been accepted.</p><br/>
           <p>For more information please reply to this email</p>`,
-    priority: "hight",
-  };
+      priority: "hight",
+    };
 
-  const info = await transporter.sendMail(mail);
-  return info;
+    const info = await transporter.sendMail(mail);
+    return info;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 /**
@@ -54,17 +58,21 @@ module.exports.sendRequestRejectedMail = async function (
   clientName,
   roomName,
 ) {
-  const mail = {
-    from: `Boutique House <${config.SMTP_EMAIL}>`,
-    to: clientEmail,
-    subject: "Your reservation request for Boutique House has been rejected",
-    text: `Hi ${clientName}, Your request for a ${roomName} has been rejected due to some issues.`,
-    html: `<p>Hi ${clientName},</p><br/>
+  try {
+    const mail = {
+      from: `Boutique House <${config.SMTP_EMAIL}>`,
+      to: clientEmail,
+      subject: "Your reservation request for Boutique House has been rejected",
+      text: `Hi ${clientName}, Your request for a ${roomName} has been rejected due to some issues.`,
+      html: `<p>Hi ${clientName},</p><br/>
           <p>Your reservation request for room <strong>${roomName}</strong> has been rejected.</p><br/>
           <p>For more information please reply to this email</p>`,
-    priority: "hight",
-  };
+      priority: "hight",
+    };
 
-  const info = await transporter.sendMail(mail);
-  return info;
+    const info = await transporter.sendMail(mail);
+    return info;
+  } catch (err) {
+    console.error(err);
+  }
 };
