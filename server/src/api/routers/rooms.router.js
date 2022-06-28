@@ -93,4 +93,19 @@ router.delete("/single/:id", async (req, res) => {
   }
 });
 
+/** Get all the associated reservation requests of a room
+ *
+ * @method DELETE
+ * @path /rooms/single/:id/requests
+ */
+router.get("/single/:id/requests", async (req, res) => {
+  const result = await roomsService.getRoomRequests(req.params.id);
+
+  if (result) {
+    res.status(200).json({success: true, data: result});
+  } else {
+    res.status(404).json({success: false, message: "Invalid room id"});
+  }
+});
+
 module.exports = router;

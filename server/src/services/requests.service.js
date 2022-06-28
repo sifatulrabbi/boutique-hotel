@@ -106,17 +106,17 @@ module.exports.acceptRequest = async function (requestId, duplicates = []) {
   });
 
   // Set accepted to true for the request
-  request.update({
+  await request.update({
     accepted: true,
     canceled: false,
   });
 
   // Set canceled to true fot the duplicates
   duplicates.forEach(async (id) => {
-    const request = await Request.findByPk(id);
+    const duplicatedRequest = await Request.findByPk(id);
 
-    if (request) {
-      request.update({canceled: true, accepted: false});
+    if (duplicatedRequest) {
+      await duplicatedRequest.update({canceled: true, accepted: false});
     }
   });
 
