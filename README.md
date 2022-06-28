@@ -12,6 +12,7 @@ The backend (/server) is built with `Node.js`, `Express.js`, and `Postgresql`. T
 - `pg & pg-hstore`: Node.js library to use Postgresql with Node.js
 - `sequelize`: Node.js ORM for SQL databases
 - `nodemon`: For running development build
+- `dayjs`: Dayjs makes it easier to work with JavaScript Dates
 
 ### Core database tables:
 
@@ -48,6 +49,7 @@ Both of the front-end app is built with `React` and `TailwindCSS`.
 - `axios`: To make HTTP requests similar to `fetch`
 - `postcss, autoPrefixer, tailwindcss`: To use TailwindCSS
 - `serve`: To serve build files with Node.js in other words run the production version of the application
+- `dayjs`: Dayjs makes it easier to work with JavaScript Dates
 
 ## Run the application
 
@@ -62,3 +64,18 @@ Both of the front-end app is built with `React` and `TailwindCSS`.
 After filling out the `.env` file navigate to the applications root folder and run `docker-compose up --build -d`.
 
 > **Note:** If for any reason the admin/landing page is showing blank white pages please restart the docker image and try again.
+
+## Application Ports
+
+**Landing page/main page:** http://localhost:3000  
+**Admin panel:** http://localhost:3001  
+**API:** http://localhost:8000
+
+The application are configured to work on a local development. But if you want to run them on server or deploy them, then you can use nginx/apache to do reverse proxy for port :3000, :3001, and finally :8000. But then you will have to update the servers url on the front-end applications. You can update the `API_URL` with the server url for the API/backend from the `.env` file to fix this problem.
+
+> ### Example:
+>
+> **Main page:** Deployed at https://boutiquehotel.com/  
+> **Admin page:** Deployed at https://admin.boutiquehotel.com/ or https://boutiquehotel.com/admin  
+> **API/server:** Deployed at https://api.boutiquehotel.com/  
+> Now update the `API_URL` with https://api.boutiquehotel.com/ and the apps should work.
