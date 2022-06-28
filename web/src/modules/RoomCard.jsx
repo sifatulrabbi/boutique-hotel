@@ -14,7 +14,6 @@ const RoomCard = ({
   img,
   id,
   notHidden,
-  showButton,
 }) => {
   const [showBooking, setShowBooking] = React.useState(false);
 
@@ -74,17 +73,15 @@ const RoomCard = ({
           </div>
 
           {/* Optional button for rooms page only */}
-          {showButton && (
-            <button
-              className="btn-secondary w-full md:w-max mt-auto"
-              onClick={toggleShow}
-            >
-              Check availability
-            </button>
-          )}
+          <button
+            className="btn-secondary w-full md:w-max mt-auto"
+            onClick={toggleShow}
+          >
+            Check availability
+          </button>
         </div>
       </div>
-      {notHidden && <RoomCardBookingSection show={showBooking} rate={cost} />}
+      <RoomCardBookingSection show={showBooking} rate={cost} />
     </div>
   );
 };

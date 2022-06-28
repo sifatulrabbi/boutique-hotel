@@ -44,7 +44,6 @@ export function useBookedDates() {
         bookedDates.reduce((prev, curr) => [...prev, ...curr]),
       );
 
-      console.log(mergedDates);
       setBookedDates(mergedDates);
     }
   }
