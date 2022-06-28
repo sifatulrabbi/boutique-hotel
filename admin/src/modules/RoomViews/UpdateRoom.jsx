@@ -1,0 +1,91 @@
+import React from "react";
+import {useRoomsCrud} from "../../hooks";
+
+import FormWrapper from "../../components/FormWrapper";
+import InputGroup from "../../components/FormGroups/InputGroup";
+import SelectGroup from "../../components/FormGroups/SelectGroup";
+import TextareaGroup from "../../components/FormGroups/TextareaGroup";
+import Modal from "../../components/Modal";
+
+const UpdateRoom = ({show, onClose, roomData}) => {
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [cost, setCost] = React.useState("");
+  const [type, setType] = React.useState("");
+
+  const {updateRoomById} = useRoomsCrud();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const payload = {...roomData};
+
+    if (name) payload.name = name;
+    if (description) payload.description = description;
+    if (cost) payload.cost = cost;
+    if (type) payload.type = type;
+    if (imageUrl) payload.img = imageUrl;
+
+    await updateRoomById(roomData.id, payload);
+
+    onClose();
+  }
+
+  return (
+    <Modal show={show} onClose={onClose}>
+      <h6 className="block font-bold w-full text-center text-textPrimary">
+        Update {roomData.name}
+      </h6>
+
+      <FormWrapper onSubmit={handleSubmit}>
+        <InputGroup
+          label="Name/title"
+          name="roomName"
+          placeholder="Room's name/title"
+          value={name}
+          onChange={(e) => setName(e.currentTarget.value)}
+        />
+        <TextareaGroup
+          label="Description"
+          name="description"
+          placeholder="Room's description"
+          value={description}
+          onChange={(e) => setDescription(e.currentTarget.value)}
+        />
+        <InputGroup
+          label="Image URL"
+          name="imageUrl"
+          placeholder="Room's image URL"
+          type="url"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.currentTarget.value)}
+        />
+        <InputGroup
+          label="Cost (USD/night)"
+          name="cost"
+          type="number"
+          placeholder="Room's cost (per night)"
+          value={cost}
+          onChange={(e) => setCost(e.currentTarget.value)}
+        />
+        <SelectGroup
+          label="Type"
+          name="type"
+          options={[
+            {name: "single", value: "single"},
+            {name: "double", value: "double"},
+          ]}
+          value={type}
+          onChange={(e) => setType(e.currentTarget.value)}
+        />
+
+        <button type="submit" className="btn-primary w-full text-sm mt-2">
+          Add
+        </button>
+      </FormWrapper>
+    </Modal>
+  );
+};
+
+export default UpdateRoom;

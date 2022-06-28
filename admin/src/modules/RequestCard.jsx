@@ -110,19 +110,18 @@ const ReservationCard = ({
           >
             {canceled ? "Canceled" : accepted ? "Resolved" : "Review"}
           </button>
-          {showModal && (
-            <ReviewRequestModal
-              onClose={closeModal}
-              id={id}
-              clientEmail={clientEmail}
-              clientName={clientName}
-              checkIn={new Date(checkIn)}
-              checkOut={new Date(checkOut)}
-              roomId={roomId}
-              cost={cost}
-              total={total}
-            />
-          )}
+          <ReviewRequestModal
+            show={showModal}
+            onClose={closeModal}
+            id={id}
+            clientEmail={clientEmail}
+            clientName={clientName}
+            checkIn={new Date(checkIn)}
+            checkOut={new Date(checkOut)}
+            roomId={roomId}
+            cost={cost}
+            total={total}
+          />
         </div>
       )}
     </Card>
