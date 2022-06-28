@@ -7,38 +7,42 @@ import SelectGroup from "../../components/FormGroups/SelectGroup";
 import TextareaGroup from "../../components/FormGroups/TextareaGroup";
 import Modal from "../../components/Modal";
 
-const CreateRoom = ({show, onClose}) => {
+const UpdateRoom = ({show, onClose, roomData}) => {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
   const [cost, setCost] = React.useState("");
   const [type, setType] = React.useState("");
 
-  const {createRoom} = useRoomsCrud();
+  const {updateRoomById} = useRoomsCrud();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    await createRoom({
-      name: name,
-      description: description,
-      type: type,
-      cost: cost,
-      img: imageUrl,
-    });
+    const payload = {...roomData};
+
+    if (name) payload.name = name;
+    if (description) payload.description = description;
+    if (cost) payload.cost = cost;
+    if (type) payload.type = type;
+    if (imageUrl) payload.img = imageUrl;
+
+    await updateRoomById(roomData.id, payload);
+
+    onClose();
   }
 
   return (
     <Modal show={show} onClose={onClose}>
       <h6 className="block font-bold w-full text-center text-textPrimary">
-        Add a room
+        Update {roomData.name}
       </h6>
+
       <FormWrapper onSubmit={handleSubmit}>
         <InputGroup
           label="Name/title"
           name="roomName"
           placeholder="Room's name/title"
-          required
           value={name}
           onChange={(e) => setName(e.currentTarget.value)}
         />
@@ -46,7 +50,6 @@ const CreateRoom = ({show, onClose}) => {
           label="Description"
           name="description"
           placeholder="Room's description"
-          required
           value={description}
           onChange={(e) => setDescription(e.currentTarget.value)}
         />
@@ -54,7 +57,6 @@ const CreateRoom = ({show, onClose}) => {
           label="Image URL"
           name="imageUrl"
           placeholder="Room's image URL"
-          required
           type="url"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.currentTarget.value)}
@@ -64,14 +66,12 @@ const CreateRoom = ({show, onClose}) => {
           name="cost"
           type="number"
           placeholder="Room's cost (per night)"
-          required
           value={cost}
           onChange={(e) => setCost(e.currentTarget.value)}
         />
         <SelectGroup
           label="Type"
           name="type"
-          required
           options={[
             {name: "single", value: "single"},
             {name: "double", value: "double"},
@@ -79,6 +79,7 @@ const CreateRoom = ({show, onClose}) => {
           value={type}
           onChange={(e) => setType(e.currentTarget.value)}
         />
+
         <button type="submit" className="btn-primary w-full text-sm mt-2">
           Add
         </button>
@@ -87,4 +88,4 @@ const CreateRoom = ({show, onClose}) => {
   );
 };
 
-export default CreateRoom;
+export default UpdateRoom;

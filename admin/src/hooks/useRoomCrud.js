@@ -12,40 +12,24 @@ export function useRoomsCrud() {
    * Update a room
    */
   async function updateRoomById(id, data) {
-    const resp = await axios.put(getApiUrl(`/rooms/single/${id}`), data);
-
-    if (resp.data.success) {
-      await getRoomsData();
-    } else {
-      console.error("Unable to update the room");
-    }
+    await axios.put(getApiUrl(`/rooms/single/${id}`), data);
+    await getRoomsData();
   }
 
   /**
    * Create a room
    */
   async function createRoom(data) {
-    const resp = await axios.post(getApiUrl("/rooms/"), data);
-
-    if (resp.data.success) {
-      console.log(resp.data.data);
-      await getRoomsData();
-    } else {
-      console.error("Unable to create a room");
-    }
+    await axios.post(getApiUrl("/rooms/"), data);
+    await getRoomsData();
   }
 
   /**
    * Remove a room
    */
   async function removeRoomById(id) {
-    const resp = await axios.delete(getApiUrl(`/rooms/single/${id}`));
-
-    if (resp.data.success) {
-      await getRoomsData();
-    } else {
-      console.log("Unable to remove the room");
-    }
+    await axios.delete(getApiUrl(`/rooms/single/${id}`));
+    await getRoomsData();
   }
 
   return {updateRoomById, createRoom, removeRoomById};

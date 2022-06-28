@@ -61,4 +61,36 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * Update a room
+ *
+ * @method PUT
+ * @path /rooms/single/:id
+ */
+router.put("/single/:id", async (req, res) => {
+  const updatedRoom = await roomsService.updateRoom(req.params.id, req.body);
+
+  if (!updatedRoom) {
+    res.status(404).json({success: false, message: "Invalid room id"});
+  } else {
+    res.status(200).json({success: true, data: updatedRoom});
+  }
+});
+
+/**
+ * Remove a room
+ *
+ * @method DELETE
+ * @path /rooms/single/:id
+ */
+router.delete("/single/:id", async (req, res) => {
+  const result = await roomsService.removeARoom(req.params.id);
+
+  if (result) {
+    res.status(200).json({success: true, message: "Room removed"});
+  } else {
+    res.status(404).json({success: false, message: "Invalid room id"});
+  }
+});
+
 module.exports = router;

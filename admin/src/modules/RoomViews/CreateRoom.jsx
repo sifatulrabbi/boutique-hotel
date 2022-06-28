@@ -7,7 +7,7 @@ import SelectGroup from "../../components/FormGroups/SelectGroup";
 import TextareaGroup from "../../components/FormGroups/TextareaGroup";
 import Modal from "../../components/Modal";
 
-const UpdateRoom = ({show, onClose}) => {
+const CreateRoom = ({show, onClose}) => {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
@@ -18,6 +18,16 @@ const UpdateRoom = ({show, onClose}) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    await createRoom({
+      name: name,
+      description: description,
+      type: type,
+      cost: parseInt(cost),
+      img: imageUrl,
+    });
+
+    onClose();
   }
 
   return (
@@ -30,6 +40,7 @@ const UpdateRoom = ({show, onClose}) => {
           label="Name/title"
           name="roomName"
           placeholder="Room's name/title"
+          required
           value={name}
           onChange={(e) => setName(e.currentTarget.value)}
         />
@@ -37,6 +48,7 @@ const UpdateRoom = ({show, onClose}) => {
           label="Description"
           name="description"
           placeholder="Room's description"
+          required
           value={description}
           onChange={(e) => setDescription(e.currentTarget.value)}
         />
@@ -44,6 +56,7 @@ const UpdateRoom = ({show, onClose}) => {
           label="Image URL"
           name="imageUrl"
           placeholder="Room's image URL"
+          required
           type="url"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.currentTarget.value)}
@@ -53,12 +66,14 @@ const UpdateRoom = ({show, onClose}) => {
           name="cost"
           type="number"
           placeholder="Room's cost (per night)"
+          required
           value={cost}
           onChange={(e) => setCost(e.currentTarget.value)}
         />
         <SelectGroup
           label="Type"
           name="type"
+          required
           options={[
             {name: "single", value: "single"},
             {name: "double", value: "double"},
@@ -74,4 +89,4 @@ const UpdateRoom = ({show, onClose}) => {
   );
 };
 
-export default UpdateRoom;
+export default CreateRoom;
