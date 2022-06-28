@@ -19,3 +19,12 @@ module.exports.getAllRooms = async function () {
 
   return rooms;
 };
+
+/**
+ * Create a room
+ */
+module.exports.createRoom = async function (data) {
+  const room = await Room.create(data);
+
+  return room;
+};

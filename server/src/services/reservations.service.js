@@ -33,7 +33,7 @@ module.exports.addReservation = async function ({
  * @param {number} id
  */
 module.exports.getReservationById = async function (id) {
-  const reservation = await Reservation.findByPk(di);
+  const reservation = await Reservation.findByPk(id);
 
   if (reservation) return reservation;
   return null;

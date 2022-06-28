@@ -28,6 +28,7 @@ export function useRoomsCrud() {
     const resp = await axios.post(getApiUrl("/rooms/"), data);
 
     if (resp.data.success) {
+      console.log(resp.data.data);
       await getRoomsData();
     } else {
       console.error("Unable to create a room");

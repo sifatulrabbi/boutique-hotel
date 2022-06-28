@@ -13,9 +13,7 @@ const SelectGroup = (props) => {
         {..._.omit(props, "className", "options")}
         id={props.id}
       >
-        <option disabled value="">
-          Select one
-        </option>
+        <option value="">Select one</option>
         {props.options.map(({name, value}) => (
           <option key={v4()} value={value}>
             {name}
