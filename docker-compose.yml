@@ -9,6 +9,7 @@ services:
       - boutique_hotel:/var/lib/psql
 
   server:
+    container_name: api
     build: ./server
     restart: always
     depends_on:
@@ -24,27 +25,32 @@ services:
       - DB_USERNAME=$POSTGRES_USER
       - DB_PASSWORD=$POSTGRES_PASSWORD
 
-  # web:
-  #   build: ./web
-  #   depends_on:
-  #     - server
-  #   restart: always
-  #   stdin_open: true
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
-  #   ports:
-  #     - "3000:3000"
+  web:
+    container_name: landing_page
+    build: ./web
+    depends_on:
+      - server
+    restart: always
+    stdin_open: true
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URL=$REACT_APP_API_URL
+    ports:
+      - "3000:3000"
 
-  # admin:
-  #   build: ./admin
-  #   depends_on:
-  #     - server
-  #   restart: always
-  #   stdin_open: true
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
-  #   ports:
-  #     - "3001:3001"
+  admin:
+    container_name: admin_page
+    build: ./admin
+    depends_on:
+      - server
+    restart: always
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URL=$REACT_APP_API_URL
+    ports:
+      - "3001:3001"
 
 volumes:
   boutique_hotel:

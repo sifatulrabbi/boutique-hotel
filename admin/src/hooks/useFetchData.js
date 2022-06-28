@@ -14,7 +14,6 @@ export function useFetchData() {
    */
   async function getRoomsData() {
     const resp = await axios.get(getApiUrl("/rooms/all"));
-    console.log(resp.data.data);
     if (resp.data.success) {
       setRooms(resp.data.data);
     }
