@@ -1,14 +1,15 @@
 // Dependencies
 import React, {Suspense} from "react";
 import {useFetchData, useAuth} from "./hooks";
-import recoil from "recoil";
-import {authState} from "./atoms";
 // Components
 import {Routes, Route} from "react-router-dom";
 import Rooms from "./pages/Rooms";
 import Reservations from "./pages/Reservations";
 import Requests from "./pages/Requests";
 import SidePanel from "./modules/SidePanel";
+// States
+import recoil from "recoil";
+import {authState} from "./atoms";
 
 const App = () => {
   const auth = recoil.useRecoilValue(authState);
@@ -54,6 +55,7 @@ const App = () => {
           </Routes>
         </>
       ) : (
+        // Login screen
         <div className="w-full h-screen flex flex-col justify-center items-center gap-6">
           <h4 className="text-xl md:text-2xl font-extrabold text-textPrimary">
             Boutique Hotel admin panel

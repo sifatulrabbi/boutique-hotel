@@ -58,14 +58,3 @@ const Rooms = () => {
 };
 
 export default Rooms;
-
-/*
-cost
-createdAt
-description
-id
-name
-type
-updatedAt
-img
-*/
