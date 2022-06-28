@@ -1,6 +1,11 @@
 import React from "react";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+
 import recoil from "recoil";
 import {requestsState} from "../atoms";
+
+dayjs.extend(isBetween);
 
 /**
  * This hook will find all the overlapped requests. In other words this will find the requests that has the same date.
@@ -29,14 +34,30 @@ export function useOverlappedRequests(id) {
     if (!selectedRequest) return;
 
     const requests = allRequests.filter((req) => {
-      const start = new Date(req.checkIn).getTime();
-      const end = new Date(req.checkOut).getTime();
-      const selectedStart = new Date(selectedRequest.checkIn).getTime();
-      const selectedEnd = new Date(selectedRequest.checkOut).getTime();
+      if (req.id === selectedRequest.id) return false;
+      if (req.roomId !== selectedRequest.roomId) return false;
 
-      if (selectedStart >= start && selectedStart <= end && req.id !== id) {
-        return true;
-      } else if (selectedEnd >= start && selectedEnd <= end && req.id !== id) {
+      const selectedCheckIn = dayjs(selectedRequest.checkIn);
+      const selectedCheckOut = dayjs(selectedRequest.checkOut);
+
+      const reqCheckIn = dayjs(req.checkIn);
+      const reqCheckOut = dayjs(req.checkOut);
+
+      // If the requests start date is in between the currently selected request's dates
+      if (
+        selectedCheckIn.isBetween(reqCheckIn, reqCheckOut, "day") ||
+        selectedCheckIn.isSame(reqCheckIn, "day") ||
+        selectedCheckIn.isSame(reqCheckOut, "day") ||
+        selectedCheckOut.isSame(reqCheckIn, "day") ||
+        selectedCheckOut.isSame(reqCheckOut, "day") ||
+        selectedCheckOut.isBetween(reqCheckIn, reqCheckOut, "day") ||
+        reqCheckIn.isBetween(selectedCheckIn, selectedCheckOut, "day") ||
+        reqCheckOut.isBetween(selectedCheckIn, selectedCheckOut, "day") ||
+        reqCheckOut.isSame(selectedCheckIn, "day") ||
+        reqCheckOut.isSame(selectedCheckOut, "day") ||
+        reqCheckIn.isSame(selectedCheckIn, "day") ||
+        reqCheckIn.isSame(selectedCheckOut, "day")
+      ) {
         return true;
       }
 

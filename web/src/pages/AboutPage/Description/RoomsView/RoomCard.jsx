@@ -1,30 +1,36 @@
 import React from "react";
-import {Link} from "react-router-dom";
 
-const RoomCard = ({title, type, rate, id, img}) => {
+import {Link} from "react-router-dom";
+import Chip from "../../../../components/Chip";
+
+const RoomCard = ({type, cost, img}) => {
   return (
-    <div className="flex flex-row rounded-3xl bg-white p-4 gap-4 w-full max-w-[350px]">
+    <Link
+      to="/rooms"
+      className="flex flex-row rounded-3xl bg-white p-4 gap-4 w-full max-w-[350px]"
+    >
       <img
         src={img}
         alt=""
-        className="w-[80px] min-h-full object-cover rounded-xl"
+        height={120}
+        width={120}
+        className="w-[100px] min-h-full object-cover rounded-xl"
       />
 
       {/* Contents */}
-      <div className="flex flex-col">
-        <h6 className="text-sm font-bold text-textPrimary mb-2">{title}</h6>
-        <span className="text-sm">{type}</span>
-        <span className="text-sm flex flex-row">
-          Starting from <span className="font-bold">${rate}/night</span>
+      <div className="flex flex-col gap-2 text-sm md:text-base">
+        <Chip label={type} />
+        <span className="text-sm flex flex-col md:flex-row flex-wrap gap-1">
+          Starting from
+          <strong className="font-bold text-sm inline-block">
+            ${cost}/night
+          </strong>
         </span>
-        <Link
-          to={`/rooms`}
-          className="mt-2 text-primary-400 text-left text-sm font-bold"
-        >
+        <button className="text-primary-400 text-left text-sm font-bold">
           View Room
-        </Link>
+        </button>
       </div>
-    </div>
+    </Link>
   );
 };
 

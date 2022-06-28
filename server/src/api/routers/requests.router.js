@@ -104,13 +104,6 @@ router.delete("/:id", async (req, res) => {
     const result = await requestsService.removeRequest(req.params.id);
 
     if (result) {
-      // Send email
-      await emailsService.sendRequestRejectedMail(
-        result.clientEmail,
-        result.clientName,
-        result.roomId,
-      );
-
       res.status(200).json({success: true, message: "Request removed"});
     } else {
       res.status(404).json({success: false, message: "Request not found"});

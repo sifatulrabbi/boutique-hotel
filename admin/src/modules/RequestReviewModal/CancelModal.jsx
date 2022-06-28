@@ -4,17 +4,17 @@ import {useFetchData} from "../../hooks";
 import axios from "axios";
 import {getApiUrl} from "../../utils";
 // Components
-import Overlay from "../../components/Overlay";
+import Modal from "../../components/Modal";
 
 const CancelModal = ({show, onClose, requestId}) => {
-  const {getRequestsData} = useFetchData();
+  const {getAllData} = useFetchData();
 
   async function cancelRequest() {
     try {
       const resp = await axios.delete(getApiUrl(`/requests/${requestId}`));
 
       if (resp.data.success) {
-        await getRequestsData();
+        await getAllData();
         onClose();
 
         console.log("Request canceled");
@@ -28,10 +28,7 @@ const CancelModal = ({show, onClose, requestId}) => {
 
   return (
     <>
-      <div
-        className={`z-[30] flex-col gap-4 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl p-4 shadow-lg 
-        ${show ? "flex" : "hidden"}`}
-      >
+      <Modal show={show} onClose={onClose}>
         {/* Message */}
         <span className="text-textPrimary max-w-sm">
           Remove the request and send the client an cancelation email?
@@ -46,8 +43,7 @@ const CancelModal = ({show, onClose, requestId}) => {
             Okay
           </button>
         </div>
-      </div>
-      {show && <Overlay z={25} />}
+      </Modal>
     </>
   );
 };

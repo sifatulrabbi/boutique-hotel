@@ -23,6 +23,9 @@ export function useCalendar() {
       setStartDate(date);
       setIsStart(false);
     } else {
+      if (date < startDate) {
+        return;
+      }
       setEndDate(date);
       setIsStart(true);
 
@@ -58,6 +61,8 @@ export function useCalendar() {
   function resetDates() {
     setStartDate(0);
     setEndDate(0);
+    setIsStart(true);
+    setSelectedDates([]);
   }
 
   React.useEffect(() => {

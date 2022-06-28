@@ -1,13 +1,14 @@
 import React from "react";
-import {BsXLg} from "react-icons/bs";
 import {v4} from "uuid";
 import {useOverlappedRequests} from "../../hooks";
 import SmallRequestView from "./SmallRequestView";
 import ConfirmModal from "./ConfirmModal";
 import CancelModal from "./CancelModal";
+import Modal from "../../components/Modal";
 
 const ReviewRequestModal = ({
   id,
+  show,
   onClose,
   clientName,
   clientEmail,
@@ -30,14 +31,11 @@ const ReviewRequestModal = ({
 
   return (
     <>
-      <div className="z-[21] fixed flex flex-col gap-4 w-[90%] lg:w-[70%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 rounded-2xl bg-white shadow-lg">
-        <button
-          className="fixed top-4 right-4 text-red-500 text-lg"
-          onClick={onClose}
-        >
-          <BsXLg />
-        </button>
-
+      <Modal
+        show={show}
+        onClose={onClose}
+        className="md:max-w-[80vw] lg:max-w-[60vw]"
+      >
         <div className="grid grid-cols-1 md:grid-cols-[0.5fr_1fr] gap-4">
           {/* Details view */}
           <div className="flex flex-col gap-8 border-b-[1px] md:border-b-0 md:border-r-[1px] border-gray-200 pb-4">
@@ -102,16 +100,19 @@ const ReviewRequestModal = ({
             Accept
           </button>
         </div>
-      </div>
-      <div className="fixed z-[20] top-0 left-0 right-0 bottom-0 bg-black/50" />
+      </Modal>
 
       <ConfirmModal
         show={confirm}
-        onClose={onClose}
+        onClose={() => setConfirm(false)}
         requestId={id}
         duplicates={overlaps}
       />
-      <CancelModal show={cancel} onClose={onClose} requestId={id} />
+      <CancelModal
+        show={cancel}
+        onClose={() => setCancel(false)}
+        requestId={id}
+      />
     </>
   );
 };

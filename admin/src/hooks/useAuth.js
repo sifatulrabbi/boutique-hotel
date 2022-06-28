@@ -25,7 +25,6 @@ export function useAuth() {
 
     if (authState) {
       const localState = JSON.parse(authState);
-      console.log(localState);
 
       if (localState.isLoggedIn) {
         setAuth({isLoggedIn: true});
