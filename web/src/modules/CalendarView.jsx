@@ -24,7 +24,6 @@ const CalendarView = () => {
     startDate,
     endDate,
     selectedDates,
-    month,
     year,
     handleSelected,
     resetDates,
@@ -138,7 +137,7 @@ const CalendarView = () => {
                 key={v4()}
                 className={`font-normal text-xs lg:text-sm h-8 w-8 rounded-full 
               ${
-                (date !== 0) & (startDate === date)
+                startDate === date
                   ? "bg-primary-400 text-white"
                   : (date !== 0) & (endDate === date)
                   ? "bg-primary-400 text-white"
@@ -158,7 +157,7 @@ const CalendarView = () => {
                 new Date().getDate() > date
                   ? "line-through pointer-events-none"
                   : ""
-              }`}
+              } disabled:bg-white disabled:text-textSecondary`}
                 onClick={() =>
                   handleSelected(
                     date,
@@ -167,7 +166,7 @@ const CalendarView = () => {
                 }
                 disabled={date === 0}
               >
-                {date === 0 ? "--" : date}
+                {date === 0 ? "-" : date}
               </button>
             ))}
           </div>
@@ -185,7 +184,7 @@ const CalendarView = () => {
         <span className="text-sm font-bold">
           To:{" "}
           <span className="font-normal">
-            {endDate === 0 ? "--" : endDate}, {month}
+            {endDate === 0 ? "--" : endDate}, {activeCal.month}
           </span>
         </span>
         <button

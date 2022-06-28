@@ -1,6 +1,7 @@
 const {Request, Room} = require("../models");
 const reservationsService = require("./reservations.service");
 const {calcTimeDifference} = require("../utils");
+const emailsService = require("./emails.service");
 
 /**
  * Add a reservation request
@@ -46,6 +47,13 @@ module.exports.removeRequest = async function (id) {
   if (!request) return false;
 
   await request.destroy();
+  // Send email
+  await emailsService.sendRequestRejectedMail(
+    result.clientEmail,
+    result.clientName,
+    result.roomId,
+  );
+
   return request;
 };
 
@@ -91,7 +99,6 @@ module.exports.getRequestsByRoom = async function (roomId) {
  */
 module.exports.acceptRequest = async function (requestId, duplicates = []) {
   const request = await Request.findByPk(requestId);
-
   if (!request) return null;
 
   // Create a reservation
@@ -106,17 +113,23 @@ module.exports.acceptRequest = async function (requestId, duplicates = []) {
   });
 
   // Set accepted to true for the request
-  request.update({
+  await request.update({
     accepted: true,
     canceled: false,
   });
 
   // Set canceled to true fot the duplicates
   duplicates.forEach(async (id) => {
-    const request = await Request.findByPk(id);
+    const duplicatedRequest = await Request.findByPk(id);
 
-    if (request) {
-      request.update({canceled: true, accepted: false});
+    if (duplicatedRequest) {
+      await duplicatedRequest.update({canceled: true, accepted: false});
+      // Send email
+      await emailsService.sendRequestRejectedMail(
+        duplicatedRequest.clientEmail,
+        duplicatedRequest.clientName,
+        duplicatedRequest.roomId,
+      );
     }
   });
 
