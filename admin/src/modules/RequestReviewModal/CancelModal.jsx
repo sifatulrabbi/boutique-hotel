@@ -7,14 +7,14 @@ import {getApiUrl} from "../../utils";
 import Modal from "../../components/Modal";
 
 const CancelModal = ({show, onClose, requestId}) => {
-  const {getRequestsData} = useFetchData();
+  const {getAllData} = useFetchData();
 
   async function cancelRequest() {
     try {
       const resp = await axios.delete(getApiUrl(`/requests/${requestId}`));
 
       if (resp.data.success) {
-        await getRequestsData();
+        await getAllData();
         onClose();
 
         console.log("Request canceled");

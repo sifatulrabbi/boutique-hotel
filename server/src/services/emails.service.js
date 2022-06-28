@@ -56,14 +56,13 @@ module.exports.sendRequestAcceptedMail = async function (
 module.exports.sendRequestRejectedMail = async function (
   clientEmail,
   clientName,
-  roomName,
 ) {
   try {
     const mail = {
       from: `Boutique House <${config.SMTP_EMAIL}>`,
       to: clientEmail,
       subject: "Your reservation request for Boutique House has been rejected",
-      text: `Hi ${clientName}, Your request for a ${roomName} has been rejected due to some issues.`,
+      text: `Hi ${clientName}, Your request for a room on Boutique Hotel has been rejected due to some issues.`,
       html: `<p>Hi ${clientName},</p><br/>
           <p>Your reservation request for room <strong>${roomName}</strong> has been rejected.</p><br/>
           <p>For more information please reply to this email</p>`,

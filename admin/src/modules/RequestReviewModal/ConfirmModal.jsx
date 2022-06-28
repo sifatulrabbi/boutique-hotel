@@ -7,7 +7,7 @@ import axios from "axios";
 import Modal from "../../components/Modal";
 
 const ConfirmModal = ({show, onClose, requestId, duplicates}) => {
-  const {getReservationsData} = useFetchData();
+  const {getReservationsData, getAllData} = useFetchData();
 
   async function sendAcceptRequest() {
     const duplicateIds = duplicates.map((duplicate) => duplicate.id);
@@ -21,9 +21,7 @@ const ConfirmModal = ({show, onClose, requestId, duplicates}) => {
     );
 
     if (result.data.success) {
-      console.log("Request accepted");
-      console.log(result.data.data);
-
+      await getAllData();
       await getReservationsData();
 
       onClose();

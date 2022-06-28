@@ -49,9 +49,8 @@ module.exports.removeRequest = async function (id) {
   await request.destroy();
   // Send email
   await emailsService.sendRequestRejectedMail(
-    result.clientEmail,
-    result.clientName,
-    result.roomId,
+    request.clientEmail,
+    request.clientName,
   );
 
   return request;

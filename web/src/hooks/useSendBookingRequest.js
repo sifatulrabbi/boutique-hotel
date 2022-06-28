@@ -65,6 +65,7 @@ export function useSendBookingRequest() {
       setCheckInDate(0);
       setCheckOutDate(0);
       setSelectedRoomId(-1);
+      window.location.href = "/";
 
       return true;
     }
