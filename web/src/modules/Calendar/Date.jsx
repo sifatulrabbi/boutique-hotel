@@ -2,40 +2,61 @@
 import React from "react";
 import dayjs from "dayjs";
 
-// interface Props {
-//   monthAndYear: [month: number, year: number];
-//   dateStr: string;
-//   onSelect?: (dateStr: string) => void;
-//   startDate?: string;
-//   endDate?: string;
-// }
-
 const DateBtn = ({
   dateStr,
   monthAndYear,
   onSelect,
   startDate,
   endDate,
-  bookedDays,
+  bookedDates,
 }) => {
   const [isPeakDate, setIsPeakDate] = React.useState(false);
   const [isInBetween, setIsInBetween] = React.useState(false);
+  const [isNonBookable, setIsNonBookable] = React.useState(false);
+  const [isDisabledDate, setIsDisabled] = React.useState(false);
 
-  /** Find out whether the date is from current month or not */
-  const isDisabledDate =
-    dayjs(dateStr).isBefore(
-      new Date(monthAndYear[1], monthAndYear[0]),
-      "month",
-    ) ||
-    dayjs(dateStr).isAfter(new Date(monthAndYear[1], monthAndYear[0]), "month");
-  /** If the day is bookable or not. e.g. past days/previously booked dates */
-  const isNonBookable =
-    dayjs(dateStr).isBefore(Date.now(), "day") ||
-    bookedDays?.find((item) => dayjs(item).isSame(dateStr, "day"));
+  /** Dates before today are disabled by default */
+  function updatedDisableStatus() {
+    if (
+      dayjs(dateStr).isBefore(
+        new Date(monthAndYear[1], monthAndYear[0]),
+        "month",
+      ) ||
+      dayjs(dateStr).isBefore(Date.now(), "day") ||
+      dayjs(dateStr).isAfter(
+        new Date(monthAndYear[1], monthAndYear[0]),
+        "month",
+      )
+    ) {
+      setIsDisabled(true);
+      return;
+    }
+
+    const currDate = dayjs(dateStr);
+    // If the date is in the past
+    if (currDate.isBefore(Date.now(), "day")) {
+      setIsNonBookable(true);
+      return;
+    }
+    // If the date is bookable or not
+    for (let i = 0; i < bookedDates.length; i++) {
+      // If the day is previously booked
+      if (currDate.isSame(bookedDates[i], "day")) {
+        setIsNonBookable(true);
+        break;
+      }
+    }
+  }
+
+  React.useMemo(() => {
+    updatedDisableStatus();
+  }, [bookedDates]);
 
   React.useEffect(() => {
     updatePosition();
   }, [startDate, endDate]);
+
+  React.useEffect(() => {}, []);
 
   function updatePosition() {
     if (!startDate && !endDate) return;

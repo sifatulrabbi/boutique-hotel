@@ -12,7 +12,7 @@ const RoomsPage = () => {
       <h3 className="text-2xl font-bold text-textPrimary">Chose your room</h3>
       {/* Rooms */}
       {rooms.map((room) => (
-        <RoomCard key={v4()} notHidden showButton {...room} />
+        <RoomCard key={v4()} notHidden {...room} />
       ))}
     </div>
   );

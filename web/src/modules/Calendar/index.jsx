@@ -3,7 +3,7 @@ import React from "react";
 import {v4} from "uuid";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import {useCalendar} from "../../hooks/useCalendarV2";
+import {useCalendar} from "../../hooks/useCalendar";
 
 import {MdChevronLeft, MdChevronRight} from "react-icons/md";
 import DateBtn from "./Date";
@@ -32,7 +32,7 @@ const Calendar = ({
   endDate,
   handleStartDate,
   handleEndDate,
-  bookedDays,
+  bookedDates,
 }) => {
   const [isStart, setIsStart] = React.useState(true);
 
@@ -90,7 +90,7 @@ const Calendar = ({
             {monthNames[monthAndYear[0]]}, {monthAndYear[1]}
           </span>
           <button
-            className="text-primary-400 text-xs uppercase tracking-wider rounded p-2 hover:bg-gray-200"
+            className="text-primary-400 text-xs uppercase tracking-wider rounded hover:text-primary-700"
             onClick={setToday}
           >
             Today
@@ -119,7 +119,7 @@ const Calendar = ({
                 onSelect={handleSelect}
                 startDate={startDate}
                 endDate={endDate}
-                bookedDays={bookedDays}
+                bookedDates={bookedDates}
               />
             ))}
           </div>
@@ -139,7 +139,7 @@ const Calendar = ({
           </span>
         </div>
         <button
-          className="text-primary-400 text-xs uppercase tracking-wider rounded p-2 hover:bg-gray-200"
+          className="text-primary-400 text-xs uppercase tracking-wider rounded hover:text-primary-700"
           onClick={clearSelection}
         >
           Clear

@@ -3,12 +3,12 @@ import dayjs from "dayjs";
 
 import Calendar from "./Calendar";
 
-import {useSetRecoilState} from "recoil";
+import recoil from "recoil";
 import {showLoginModalState} from "../atoms";
 
-const RoomCardBookingSection = ({show, rate}) => {
+const RoomCardBookingSection = ({show, rate, bookedDates}) => {
   const [totalDays, setTotalDays] = React.useState([]);
-  const setShowLoginModal = useSetRecoilState(showLoginModalState);
+  const setShowLoginModal = recoil.useSetRecoilState(showLoginModalState);
 
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
@@ -30,6 +30,10 @@ const RoomCardBookingSection = ({show, rate}) => {
     setEndDate(dateStr);
   }
 
+  function handleCheckout() {
+    setShowLoginModal(true);
+  }
+
   return (
     <div className={`w-full px-5 ${show ? "block" : "hidden"}`}>
       <div className="border-t-[1px] border-gray-200 py-6 flex flex-col md:flex-row gap-8 w-full">
@@ -39,7 +43,7 @@ const RoomCardBookingSection = ({show, rate}) => {
           endDate={endDate}
           handleStartDate={handleStartDate}
           handleEndDate={handleEndDate}
-          bookedDays={[]}
+          bookedDates={bookedDates}
         />
         <div className="w-full text-sm flex flex-col">
           <span className="w-full flex flex-row justify-between border-b-[1px] border-gray-300 py-2">
@@ -67,7 +71,7 @@ const RoomCardBookingSection = ({show, rate}) => {
           <button
             className="btn-primary w-full mt-auto disabled:bg-gray-500"
             disabled={totalDays < 1}
-            onClick={() => setShowLoginModal((prev) => !prev)}
+            onClick={handleCheckout}
           >
             Checkout
           </button>
