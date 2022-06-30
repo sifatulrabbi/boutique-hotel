@@ -1,9 +1,15 @@
 import React from "react";
+import {selectedRoomsBookedDates} from "../utils";
+
 import RoomCardBookingSection from "./RoomCardBookingSection";
 import Chip from "../components/Chip";
+
 import recoil from "recoil";
-import {roomsViewIndex, selectedRoomState} from "../atoms";
-import {useBookedDates} from "../hooks";
+import {
+  roomsViewIndex,
+  selectedRoomState,
+  selectedRoomAndDateInfo,
+} from "../atoms";
 
 const RoomCard = ({
   index,
@@ -16,33 +22,29 @@ const RoomCard = ({
   notHidden,
 }) => {
   const [showBooking, setShowBooking] = React.useState(false);
+  const [bookedDates, setBookedDates] = React.useState([]);
 
   const roomIndex = recoil.useRecoilValue(roomsViewIndex);
   const setSelectedRoom = recoil.useSetRecoilState(selectedRoomState);
+  const selectedRoomInfo = recoil.useSetRecoilState(selectedRoomAndDateInfo);
 
-  const {updateBookedDates} = useBookedDates();
-
-  function toggleShow() {
-    if (!showBooking) {
-      // Update the selected room's index
-      setSelectedRoom(id);
-
-      // Update the booking dates and fetch the already booked dates of the month
-      updateBookedDates(id)
-        .then(() => {
-          // Show the booking calendar section
-          setShowBooking(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          // Do not show the booking calendar section if there is an error while fetching data from the server
-          setShowBooking(false);
-        });
-    } else {
+  async function toggleShow() {
+    if (showBooking) {
       // Remove the selected room's index
-      setSelectedRoom(-1);
+      setSelectedRoom(null);
       setShowBooking(false);
+      return;
     }
+
+    const bookedDates = await selectedRoomsBookedDates(id);
+    setBookedDates(bookedDates);
+    // Update the selected room's index
+    setSelectedRoom({id, name, description, cost, type, img});
+    selectedRoomInfo((prev) => ({
+      ...prev,
+      roomId: id,
+    }));
+    setShowBooking(true);
   }
 
   return (
@@ -81,7 +83,11 @@ const RoomCard = ({
           </button>
         </div>
       </div>
-      <RoomCardBookingSection show={showBooking} rate={cost} />
+      <RoomCardBookingSection
+        show={showBooking}
+        rate={cost}
+        bookedDates={bookedDates}
+      />
     </div>
   );
 };
