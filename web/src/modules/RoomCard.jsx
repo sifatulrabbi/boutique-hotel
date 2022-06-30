@@ -5,7 +5,11 @@ import RoomCardBookingSection from "./RoomCardBookingSection";
 import Chip from "../components/Chip";
 
 import recoil from "recoil";
-import {roomsViewIndex, selectedRoomState} from "../atoms";
+import {
+  roomsViewIndex,
+  selectedRoomState,
+  selectedRoomAndDateInfo,
+} from "../atoms";
 
 const RoomCard = ({
   index,
@@ -22,6 +26,7 @@ const RoomCard = ({
 
   const roomIndex = recoil.useRecoilValue(roomsViewIndex);
   const setSelectedRoom = recoil.useSetRecoilState(selectedRoomState);
+  const selectedRoomInfo = recoil.useSetRecoilState(selectedRoomAndDateInfo);
 
   async function toggleShow() {
     if (showBooking) {
@@ -35,6 +40,10 @@ const RoomCard = ({
     setBookedDates(bookedDates);
     // Update the selected room's index
     setSelectedRoom({id, name, description, cost, type, img});
+    selectedRoomInfo((prev) => ({
+      ...prev,
+      roomId: id,
+    }));
     setShowBooking(true);
   }
 

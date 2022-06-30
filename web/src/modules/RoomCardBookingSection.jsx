@@ -1,26 +1,36 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import dayjs from "dayjs";
 
 import Calendar from "./Calendar";
 
 import recoil from "recoil";
-import {showLoginModalState} from "../atoms";
+import {showLoginModalState, selectedRoomAndDateInfo} from "../atoms";
 
 const RoomCardBookingSection = ({show, rate, bookedDates}) => {
   const [totalDays, setTotalDays] = React.useState([]);
   const setShowLoginModal = recoil.useSetRecoilState(showLoginModalState);
+  const setDateInfo = recoil.useSetRecoilState(selectedRoomAndDateInfo);
 
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
 
   React.useEffect(() => {
+    calculateTotalDays();
+  }, [startDate, endDate]);
+
+  function calculateTotalDays() {
     if (!endDate) {
       setTotalDays(0);
       return;
     }
+    if (dayjs(startDate).isSame(dayjs(endDate))) {
+      setTotalDays(1);
+      return;
+    }
     const diff = +dayjs(endDate).diff(startDate, "day");
     setTotalDays(diff);
-  }, [startDate, endDate]);
+  }
 
   function handleStartDate(dateStr) {
     setStartDate(dateStr);
@@ -31,6 +41,11 @@ const RoomCardBookingSection = ({show, rate, bookedDates}) => {
   }
 
   function handleCheckout() {
+    setDateInfo((prev) => ({
+      ...prev,
+      startDate,
+      endDate,
+    }));
     setShowLoginModal(true);
   }
 
