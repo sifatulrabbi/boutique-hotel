@@ -8,10 +8,6 @@ export function useCalendar() {
     new Date().getFullYear(),
   ]);
   const [calendarDates, setCalendarDates] = React.useState([]);
-  // UI states
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
-  const [isStart, setIsStart] = React.useState(true);
 
   /**
    * Update the current month and year
@@ -123,40 +119,13 @@ export function useCalendar() {
     updateMonthAndYear(d.getMonth(), d.getFullYear());
   }
 
-  /**
-   * Handle the date selection
-   */
-  function handleSelect(dateStr) {
-    // The last date is flexible and can change without using the clear button
-    if (isStart) {
-      setStartDate(dateStr);
-      setIsStart(false);
-    } else {
-      if (dayjs(dateStr).isBefore(startDate)) return;
-      setEndDate(dateStr);
-    }
-  }
-
-  /**
-   * Clears all the selected dates
-   */
-  function clearSelection() {
-    setStartDate("");
-    setEndDate("");
-    setIsStart(true);
-  }
-
   return {
     monthAndYear,
     calendarDates,
-    startDate,
-    endDate,
     updateMonthAndYear,
     generateCalendarDates,
     nextMonth,
     prevMonth,
     setToday,
-    handleSelect,
-    clearSelection,
   };
 }

@@ -26,23 +26,51 @@ const monthNames = [
   "December",
 ];
 
-const Calendar = ({bordered}) => {
+const Calendar = ({
+  bordered,
+  startDate,
+  endDate,
+  handleStartDate,
+  handleEndDate,
+  bookedDays,
+}) => {
+  const [isStart, setIsStart] = React.useState(true);
+
   const {
     monthAndYear,
     calendarDates,
-    startDate,
-    endDate,
     updateMonthAndYear,
     nextMonth,
     prevMonth,
-    handleSelect,
-    clearSelection,
     setToday,
   } = useCalendar();
 
   React.useEffect(() => {
     updateMonthAndYear();
   }, []);
+
+  /**
+   * Handle the date selection
+   */
+  function handleSelect(dateStr) {
+    // The last date is flexible and can change without using the clear button
+    if (isStart) {
+      handleStartDate(dateStr);
+      setIsStart(false);
+    } else {
+      if (dayjs(dateStr).isBefore(startDate)) return;
+      handleEndDate(dateStr);
+    }
+  }
+
+  /**
+   * Clears all the selected dates
+   */
+  function clearSelection() {
+    handleStartDate("");
+    handleEndDate("");
+    setIsStart(true);
+  }
 
   return (
     <div
@@ -91,6 +119,7 @@ const Calendar = ({bordered}) => {
                 onSelect={handleSelect}
                 startDate={startDate}
                 endDate={endDate}
+                bookedDays={bookedDays}
               />
             ))}
           </div>

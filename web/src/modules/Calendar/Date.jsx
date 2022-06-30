@@ -10,7 +10,14 @@ import dayjs from "dayjs";
 //   endDate?: string;
 // }
 
-const DateBtn = ({dateStr, monthAndYear, onSelect, startDate, endDate}) => {
+const DateBtn = ({
+  dateStr,
+  monthAndYear,
+  onSelect,
+  startDate,
+  endDate,
+  bookedDays,
+}) => {
   const [isPeakDate, setIsPeakDate] = React.useState(false);
   const [isInBetween, setIsInBetween] = React.useState(false);
 
@@ -21,7 +28,10 @@ const DateBtn = ({dateStr, monthAndYear, onSelect, startDate, endDate}) => {
       "month",
     ) ||
     dayjs(dateStr).isAfter(new Date(monthAndYear[1], monthAndYear[0]), "month");
-  const isNonBookable = dayjs(dateStr).isBefore(Date.now(), "day");
+  /** If the day is bookable or not. e.g. past days/previously booked dates */
+  const isNonBookable =
+    dayjs(dateStr).isBefore(Date.now(), "day") ||
+    bookedDays?.find((item) => dayjs(item).isSame(dateStr, "day"));
 
   React.useEffect(() => {
     updatePosition();
@@ -35,18 +45,16 @@ const DateBtn = ({dateStr, monthAndYear, onSelect, startDate, endDate}) => {
     if (startDate) {
       d.isSame(startDate) && setIsPeakDate(true);
     }
-
     if (endDate) {
       d.isSame(endDate) && setIsPeakDate(true);
     }
-
     if (startDate && endDate) {
       d.isBetween(startDate, endDate, "day") && setIsInBetween(true);
     }
   }
 
   function handleClick() {
-    if (onSelect) return onSelect(dateStr);
+    if (onSelect) onSelect(dateStr);
   }
 
   return (
