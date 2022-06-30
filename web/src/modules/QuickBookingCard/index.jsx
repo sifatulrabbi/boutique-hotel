@@ -4,15 +4,6 @@ import QuickBookingButton from "./QuickBookingButton";
 import DateView from "./DateView";
 import {months} from "../../utils";
 
-/**
- * @name QuickBookingCard
- * @description Quick booking card to act as a CTA (call to action). Users can quickly select their
- * desired date of check-in and check-out and proceed to the room reservation room by clicking
- * the 'Check available rooms'.
- *
- * @param {{className?: string}} param0
- * @returns {JSX.Element}
- */
 const QuickBookingCard = ({className}) => {
   const today = new Date();
   const lastDay = new Date(today.getFullYear(), today.getMonth() + 3, 0);

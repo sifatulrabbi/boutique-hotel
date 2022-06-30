@@ -1,10 +1,3 @@
-/**
- * @name DateView
- * @description Date view mini-component only used for displaying date
- *
- * @param {{date: number; month: string}} param0
- * @returns {JSX.Element}
- */
 const DateView = ({date, month}) => (
   <span className="text-textPrimary font-bold text-sm flex flex-row justify-start items-end gap-1">
     <span className="font-extrabold text-2xl">

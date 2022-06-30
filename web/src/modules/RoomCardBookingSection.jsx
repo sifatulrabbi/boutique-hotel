@@ -1,5 +1,7 @@
 import React from "react";
-import CalendarView from "./CalendarView";
+
+import Calendar from "./Calendar";
+
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {totalSelectedDatesState, showLoginModalState} from "../atoms";
 
@@ -11,7 +13,7 @@ const RoomCardBookingSection = ({show, rate}) => {
     <div className={`w-full px-5 ${show ? "block" : "hidden"}`}>
       <div className="border-t-[1px] border-gray-200 py-6 flex flex-col md:flex-row gap-8 w-full">
         {/* Calendar view */}
-        <CalendarView />
+        <Calendar />
         <div className="w-full text-sm flex flex-col">
           <span className="w-full flex flex-row justify-between border-b-[1px] border-gray-300 py-2">
             <span className="font-bold">Total nights: </span>
