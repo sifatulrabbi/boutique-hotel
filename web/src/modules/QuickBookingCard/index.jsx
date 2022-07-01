@@ -1,15 +1,19 @@
 import React from "react";
+import dayjs from "dayjs";
+import {getApiUrl} from "../../utils";
+import axios from "axios";
 
-import {Link} from "react-router-dom";
 import QuickBookingButton from "./QuickBookingButton";
 import DateView from "./DateView";
 import Calendar from "../Calendar";
-import dayjs from "dayjs";
+import SmallRoomCard from "../SmallRoomCard";
+import {v4} from "uuid";
 
 const QuickBookingCard = ({className}) => {
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
   const [show, setShow] = React.useState(false);
+  const [availableRooms, setAvailableRooms] = React.useState([]);
 
   function toggleShow() {
     setShow((prev) => !prev);
@@ -27,15 +31,22 @@ const QuickBookingCard = ({className}) => {
     setEndDate(dateStr);
   }
 
-  React.useEffect(() => {
-    setStartDate(dayjs(Date.now()));
-    setEndDate(dayjs(Date.now()));
-  }, []);
+  async function handleAvailableRooms() {
+    if (!startDate || !endDate) return setShow(true);
+
+    handleHide();
+
+    const checkIn = dayjs(startDate).format("YYYY-MM-DD");
+    const checkOut = dayjs(endDate).format("YYYY-MM-DD");
+    const url = getApiUrl(`/rooms/all?checkIn=${checkIn}&checkOut=${checkOut}`);
+    const resp = await axios.get(url);
+    setAvailableRooms(resp.data.data);
+  }
 
   return (
     <>
       <div
-        className={`bg-white flex flex-col rounded-3xl w-full max-w-[90%] mx-auto lg:flex-row lg:justify-between lg:items-center p-4 ${className}`}
+        className={`bg-white grid grid-cols-1 rounded-3xl w-full max-w-[90%] mx-auto lg:grid-cols-4 lg:justify-between gap-4 items-center p-4 ${className}`}
       >
         <QuickBookingButton
           toggleShow={toggleShow}
@@ -51,23 +62,30 @@ const QuickBookingCard = ({className}) => {
         {/* from and to view section */}
         <div className="flex flex-row gap-4 justify-start items-end h-max px-4 py-4 lg:py-0 w-max mb-6 lg:mb-0">
           <DateView
-            date={dayjs(startDate).format("DD")}
-            month={dayjs(startDate).format("MMM")}
+            date={startDate ? dayjs(startDate).format("DD") : "_"}
+            month={startDate ? dayjs(startDate).format("MMM") : ""}
           />
           <span className="text-sm text-textSecondary">to</span>
           <DateView
-            date={dayjs(endDate).format("DD")}
-            month={dayjs(endDate).format("MMM")}
+            date={endDate ? dayjs(endDate).format("DD") : "_"}
+            month={endDate ? dayjs(endDate).format("MMM") : ""}
           />
         </div>
 
-        {/* Booking button to proceed to the room booking page */}
-        <Link to="/rooms">
-          <button className="btn-primary w-full lg:w-max py-4">
-            Check available rooms
-          </button>
-        </Link>
+        <button
+          className="btn-primary py-4 flex w-full"
+          onClick={handleAvailableRooms}
+        >
+          Find rooms
+        </button>
       </div>
+      {availableRooms.length > 0 && (
+        <div className="bg-white p-2 rounded-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {availableRooms.map((room) => (
+            <SmallRoomCard key={v4()} {...room} />
+          ))}
+        </div>
+      )}
       <div
         className={`fixed h-max z-[11] rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-100 shadow-lg w-max max-w-[90vw] md:max-w-md 
         ${show ? "block" : "hidden"}`}
@@ -83,7 +101,9 @@ const QuickBookingCard = ({className}) => {
           <button className="text-red-400" onClick={handleHide}>
             Cancel
           </button>
-          <button className="btn-secondary py-2">Ok</button>
+          <button className="btn-secondary py-2" onClick={handleAvailableRooms}>
+            Ok
+          </button>
         </div>
       </div>
       <div

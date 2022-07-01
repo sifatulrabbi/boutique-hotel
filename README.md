@@ -79,3 +79,11 @@ The application are configured to work on a local development. But if you want t
 > **Admin page:** Deployed at https://admin.boutiquehotel.com/ or https://boutiquehotel.com/admin  
 > **API/server:** Deployed at https://api.boutiquehotel.com/  
 > Now update the `API_URL` with https://api.boutiquehotel.com/ and the apps should work.
+
+### Edit Email body texts
+
+You can add your desired email subject and body on the /server/emails.js. The emails primarily has `CLIENT_NAME`, `CLIENT_EMAIL`, `ROOM_ID`, `CHECK_IN`, and `CHECK_OUT` date. You can use these values just by adding them in to your email text and the application will automatically parse them.
+
+> **Example**
+> Sending a mail to a client named `Steve`.
+> The line inside the email "Hi CLIENT_NAME," will be converted in to "Hi Steve,".

@@ -1,7 +1,7 @@
 const {Request, Room} = require("../models");
 const reservationsService = require("./reservations.service");
-const {calcTimeDifference} = require("../utils");
 const emailsService = require("./emails.service");
+const dayjs = require("dayjs");
 
 /**
  * Add a reservation request
@@ -19,10 +19,13 @@ module.exports.addRequest = async function ({
   if (!requestedRoom) return null;
 
   // Calculate the duration of the
-  const timeDifference = calcTimeDifference(
-    new Date(checkIn),
-    new Date(checkOut),
-  );
+  let totalDays = 0;
+
+  if (dayjs(checkIn).isSame(checkOut)) {
+    totalDays = 1;
+  } else {
+    totalDays = +dayjs(checkOut).diff(checkIn, "day");
+  }
 
   const request = await Request.create({
     roomId,
@@ -31,7 +34,7 @@ module.exports.addRequest = async function ({
     checkIn,
     checkOut,
     cost: requestedRoom.cost,
-    total: requestedRoom.cost * timeDifference.days,
+    total: requestedRoom.cost * totalDays + 70 + 35,
   });
 
   return request;
@@ -48,10 +51,13 @@ module.exports.removeRequest = async function (id) {
 
   await request.destroy();
   // Send email
-  await emailsService.sendRequestRejectedMail(
-    request.clientEmail,
-    request.clientName,
-  );
+  await emailsService.sendRequestRejectedMail({
+    roomId: request.roomId,
+    clientEmail: request.clientEmail,
+    clientName: request.clientName,
+    checkIn: request.checkIn,
+    checkOut: request.checkOut,
+  });
 
   return request;
 };
@@ -124,11 +130,13 @@ module.exports.acceptRequest = async function (requestId, duplicates = []) {
     if (duplicatedRequest) {
       await duplicatedRequest.update({canceled: true, accepted: false});
       // Send email
-      await emailsService.sendRequestRejectedMail(
-        duplicatedRequest.clientEmail,
-        duplicatedRequest.clientName,
-        duplicatedRequest.roomId,
-      );
+      await emailsService.sendRequestRejectedMail({
+        roomId: duplicatedRequest.roomId,
+        clientEmail: duplicatedRequest.clientEmail,
+        clientName: duplicatedRequest.clientName,
+        checkIn: duplicatedRequest.checkIn,
+        checkOut: duplicatedRequest.checkOut,
+      });
     }
   });
 

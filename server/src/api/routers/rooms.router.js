@@ -11,7 +11,9 @@ const router = Router();
  */
 router.get("/all", async (req, res) => {
   try {
-    const rooms = await roomsService.getAllRooms();
+    const checkIn = req.query.checkIn;
+    const checkOut = req.query.checkOut;
+    const rooms = await roomsService.findAvailableRooms(checkIn, checkOut);
     res.status(200).json({success: true, data: rooms});
   } catch (err) {
     console.error(err);

@@ -19,13 +19,14 @@ export function useSendBookingRequest() {
   }
 
   async function sendBookingRequest() {
-    const resp = await axios.post(getApiUrl("/requests"), {
+    const payload = {
       roomId: roomAndDateInfo.roomId,
-      checkIn: roomAndDateInfo.checkIn,
-      checkOut: roomAndDateInfo.checkOut,
+      checkIn: roomAndDateInfo.startDate,
+      checkOut: roomAndDateInfo.endDate,
       clientName: name,
       clientEmail: email,
-    });
+    };
+    const resp = await axios.post(getApiUrl("/requests"), payload);
 
     if (resp.data.success) {
       console.log(resp.data.data);

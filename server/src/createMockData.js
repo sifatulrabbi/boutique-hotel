@@ -45,26 +45,10 @@ async function addMockRequestsData(rooms) {
   const today = new Date();
   const requests = [];
 
-  await rooms.forEach(async (room, index) => {
-    const request = await requestsService.addRequest({
-      roomId: room.id,
-      clientEmail: "",
-      clientName: "",
-      checkIn: new Date(2022, 5, today.getDate() - index),
-      checkOut: new Date(2022, 5, today.getDate() + index),
-    });
-
-    requests.push(request);
-
-    if (requests.length === 4) {
-      await requestsService.acceptRequest(request.id);
-    }
-  });
-
   const req1 = await requestsService.addRequest({
     roomId: rooms[0].id,
-    clientEmail: "",
-    clientName: "",
+    clientEmail: "clara.croft@test.com",
+    clientName: "Clara Croft",
     checkIn: new Date(2022, 5, today.getDate() - 11),
     checkOut: new Date(2022, 5, today.getDate() + 9),
   });
@@ -73,8 +57,8 @@ async function addMockRequestsData(rooms) {
 
   await requestsService.addRequest({
     roomId: rooms[2].id,
-    clientEmail: "",
-    clientName: "",
+    clientEmail: "patrik@test.com",
+    clientName: "Patrik",
     checkIn: new Date(2022, 5, today.getDate() + 10),
     checkOut: new Date(2022, 5, today.getDate() + 13),
   });
