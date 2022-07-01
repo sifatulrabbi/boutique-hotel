@@ -80,13 +80,6 @@ router.post("/accept/:id", async (req, res) => {
       res.status(404).json({success: false, message: "Invalid request id"});
     }
 
-    // Send email
-    await emailsService.sendRequestAcceptedMail(
-      result.request.clientEmail,
-      result.request.clientName,
-      result.request.roomId,
-    );
-
     res.status(200).json({success: true, data: result});
   } catch (err) {
     res.status(500).json({success: false, message: err.message});

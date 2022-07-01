@@ -122,6 +122,13 @@ module.exports.acceptRequest = async function (requestId, duplicates = []) {
     accepted: true,
     canceled: false,
   });
+  await emailsService.sendRequestRejectedMail({
+    roomId: request.roomId,
+    clientEmail: request.clientEmail,
+    clientName: request.clientName,
+    checkIn: request.checkIn,
+    checkOut: request.checkOut,
+  });
 
   // Set canceled to true fot the duplicates
   duplicates.forEach(async (id) => {

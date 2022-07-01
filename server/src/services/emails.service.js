@@ -23,6 +23,11 @@ const transportConfig = {
 
 const transporter = nodemailer.createTransport(transportConfig);
 
+transporter
+  .verify()
+  .then(() => console.log("SMTP verified"))
+  .catch((err) => console.error(err));
+
 function parseEmail(
   email,
   {roomId, clientEmail, clientName, checkIn, checkOut},
