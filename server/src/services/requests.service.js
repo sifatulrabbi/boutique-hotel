@@ -122,7 +122,7 @@ module.exports.acceptRequest = async function (requestId, duplicates = []) {
     accepted: true,
     canceled: false,
   });
-  await emailsService.sendRequestRejectedMail({
+  await emailsService.sendRequestAcceptedMail({
     roomId: request.roomId,
     clientEmail: request.clientEmail,
     clientName: request.clientName,
