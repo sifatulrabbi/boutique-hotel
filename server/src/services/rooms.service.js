@@ -1,5 +1,9 @@
-const {Room} = require("../models");
+const {Room, Reservation} = require("../models");
 const {removeRequest} = require("./requests.service");
+const dayjs = require("dayjs");
+const isBetween = require("dayjs/plugin/isBetween");
+
+dayjs.extend(isBetween);
 
 /**
  * Get a room with the room id
@@ -84,4 +88,43 @@ module.exports.getRoomRequests = async function (id) {
   const reservations = await room.getRequests();
 
   return {requests, reservations};
+};
+
+/**
+ * Get available rooms between two dates
+ */
+module.exports.findAvailableRooms = async function (checkIn, checkOut) {
+  const rooms = await Room.findAll({include: [Reservation]});
+  if (!checkIn || !checkOut) return rooms;
+
+  const checkInDate = dayjs(checkIn);
+  const checkOutDate = dayjs(checkOut);
+
+  const availableRooms = [];
+  // Filter room with the check in and check out date
+  rooms.forEach((room) => {
+    let available = true;
+    room.reservations.forEach((reservation) => {
+      if (
+        // Checks for checkIn date
+        checkInDate.isSame(reservation.checkIn) ||
+        checkInDate.isSame(reservation.checkOut) ||
+        checkInDate.isBetween(reservation.checkIn, reservation.checkOut)
+      ) {
+        available = false;
+      } else if (
+        // Checks for checkOut date
+        checkOutDate.isSame(reservation.checkIn) ||
+        checkOutDate.isSame(reservation.checkOut) ||
+        checkOutDate.isBetween(reservation.checkIn, reservation.checkOut)
+      ) {
+        available = false;
+      }
+    });
+
+    // Only push available rooms
+    if (available) availableRooms.push(room);
+  });
+
+  return availableRooms;
 };

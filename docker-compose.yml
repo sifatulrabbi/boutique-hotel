@@ -24,6 +24,8 @@ services:
       - DB_NAME=$POSTGRES_USER
       - DB_USERNAME=$POSTGRES_USER
       - DB_PASSWORD=$POSTGRES_PASSWORD
+      - SMTP_EMAIL=$SMTP_EMAIL
+      - SMTP_PASSWORD=$SMTP_PASSWORD
 
   web:
     container_name: landing_page

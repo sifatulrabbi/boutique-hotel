@@ -9,7 +9,7 @@ const db = new Sequelize(
   {
     host: config.DB_HOST, // localhost as host server
     dialect: "postgres", // database dialect name
-    logging: console.log, // using the console for logging
+    logging: function () {}, // using the console for logging
   },
 );
 

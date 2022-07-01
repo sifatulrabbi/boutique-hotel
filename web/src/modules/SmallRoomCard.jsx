@@ -1,9 +1,9 @@
 import React from "react";
 
 import {Link} from "react-router-dom";
-import Chip from "../../../../components/Chip";
+import Chip from "../components/Chip";
 
-const RoomCard = ({type, cost, img}) => {
+const SmallRoomCard = ({type, cost, img}) => {
   return (
     <Link
       to="/rooms"
@@ -34,4 +34,4 @@ const RoomCard = ({type, cost, img}) => {
   );
 };
 
-export default RoomCard;
+export default SmallRoomCard;
