@@ -20,8 +20,19 @@ const RoomCardBookingSection = ({show, rate, bookedDates}) => {
   }, [startDate, endDate]);
 
   function calculateTotalDays() {
-    if (!endDate) {
+    if (!startDate || !endDate) {
       setTotalDays(0);
+      return;
+    }
+    let validEndDate = true;
+    bookedDates.forEach((date) => {
+      if (dayjs(date).isBetween(startDate, endDate)) {
+        validEndDate = false;
+      }
+    });
+    if (!validEndDate) {
+      setStartDate("");
+      setEndDate("");
       return;
     }
     if (dayjs(startDate).isSame(dayjs(endDate))) {
